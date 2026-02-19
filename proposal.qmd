@@ -13,7 +13,8 @@ library(tidyverse)
 
 ## Introduction and data
 
--   The source of the data is kaggle.
+-   Identify the source of the data.
+The source of the data is kaggle
 
 -   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
 
@@ -29,7 +30,7 @@ library(tidyverse)
 
 - Our hypothesis is that sequels will generate less revenue than original films when accounting for budget, since budgets are usually higher for sequels, but typically don't generate as much traction or popularity with audiences. In other words, their revenue-to-budget ratio may be lower. We expect there to be some outliers with big film franchises such as Marvel movies or the Star Wars franchise, which could have sequels that are more successful than their original films.
 
-- There are 4 main variables that we will be evaluating: sequel status, revenue, budget and revenue/budget ratio. Sequel status is a categorical variable, since the answer is either yes or no. Revenue is a numerical continuous variable since it can have a wide range of values and is measured in dollars. Budget is also a numerical continuous variable since it can have a wide range of values. Revenue/budget ratio is also a numerical (continuous) variable for the same reasons. A potential fifth variable is IMDB rating, which is also numerical (continuous), since it can have many different values ranging from 1-10 (including decimals) and not just a select few options. 
+- There are 4 main variables that we will be evaluating: sequel status, revenue, budget and revenue/budget ratio. Sequel status is a categorical variable, since the answer is either yes or no. Revenue is a numerical continuous variable since it can have a wide range of values and is measured in dollars. Budget is also a numerical continuous variable since it can have a wide range of values. Revenue/budget ratio is also a numerical (continuous) variable for the same reasons. A potential fifth variable is IMDB rating, which is also numerical (continuous), since it can have many different values ranging from 1-10(including decimals) and not just a select few options. 
 
 ## Glimpse of data
 

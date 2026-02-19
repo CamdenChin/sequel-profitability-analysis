@@ -23,9 +23,10 @@ library(tidyverse)
 
 ## Research question
 
--   A well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)
+-  Do sequels generate higher box office revenue than original films after accounting for budget? 
 
--   A description of the research topic along with a concise statement of your hypotheses on this topic.
+-   A description of the research topic
+Our hypothesis is that sequels will generate less revenue than original films when accounting for budget, since budgets are usually higher for sequels, but typically don't generate as much traction or popularity with audiences. We expect there to be some outliers with big film franchises such as Marvel movies or the Star Wars franchise.
 
 -   Identify the types of variables in your research question. Categorical? Numerical?
 

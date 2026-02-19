@@ -3,7 +3,7 @@ title: Meet the team
 author: "Lexi Payne"
 ---
 
-This project was developed by **\[ggplot]** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
+This project was developed by **\[Team GGPLOT]** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
 The team is comprised of the following team members.
 
 -   Team member 1: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.

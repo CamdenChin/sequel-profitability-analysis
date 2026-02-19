@@ -6,8 +6,13 @@ author: "Lexi Payne"
 This project was developed by **\[Team GGPLOT]** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
 The team is comprised of the following team members.
 
+<<<<<<< HEAD
 -   David Boham: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
 -   Team member 2: One sentence description of Team member 2 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
+=======
+-   Team member 1: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
+-   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is my LinkedIn: https://www.linkedin.com/in/camden-chin/. 
+>>>>>>> 043d8e07ae4be32c57c86fff7494eb24f5fda7a3
 -   Team member 3: One sentence description of Team member 3 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
 -   Team member 4: One sentence description of Team member 4 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
 -   ...

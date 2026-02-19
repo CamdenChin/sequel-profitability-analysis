@@ -1,0 +1,94 @@
+---
+title: Team contract
+---
+
+# Rationale
+
+Teams work better when members have a common understanding of the team's goals and expectations for collaboration.
+The purpose of this activity is to help your team making a plan for working together during lab and outside of the scheduled lab time.
+Each team member will have some ideas about how a team should operate.
+These ideas may be very different.
+This is your opportunity to share your thoughts and ideas to promote optimal team function and prevent misunderstandings in the future.
+
+# Instructions
+
+Discuss each of the items below as a team.
+Have one person act as the **recorder** and type the team's decisions in this document.
+*Be sure the team agrees on an item before it is added to the document.*
+
+Once the document is complete, the recorder should render, commit, and push the team agreement to GitHub.
+All team members can refer to this document throughout the semester.
+
+# Goals
+
+-   What are your team goals for this project?
+
+Discuss as a team and add your response here.
+
+-   What do you want to accomplish? What skills do you want to develop or refine?
+
+Discuss as a team and add your response here.
+
+# Expectations
+
+## Meetings
+
+-   Meeting times: Identify a 1 - 2 hour weekly block outside of lab where the team can meet to work on assignments. All team members should block off this time on their calendar in case the team needs to meet to work on the project. Note: If you are unable to find a weekly time when the team can meet, briefly outline a plan to work on assignments outside of lab.
+
+Discuss as a team and add your response here.
+
+-   Meeting location: Identify how or where the team will meet to work together (e.g. in-person, Zoom, Facetime, Google Hangouts). Be sure every member is able to access the in-person and/or virtual meeting space.
+
+Discuss as a team and add your response here.
+
+## Communication
+
+-   Method of communication: Identify the team's primary method of communication outside of meetings (e.g. GroupMe, Slack, text messages, etc.). Be sure all members are able to access the team's chosen communication platform.
+
+Discuss as a team and add your response here.
+
+-   Notifying team members: How should someone notify the other members if they are unable to attend lab or a scheduled team meeting?
+
+Discuss as a team and add your response here.
+
+## Workflow
+
+While it's not productive to divvy up the entire project work at the beginning and bring all the pieces together at the end, there will be times throughout the semester you might decide to divvy up smaller portions of the work among the team members.
+
+-   By when should everyone have their portion of the work completed? *Keep in mind your team will want to have time to review each portion before turning it in to make sure all pieces make sense together and any writing is cohesive.*
+
+Discuss as a team and add your response here.
+
+-   How should team members communicate if they're struggling with the portion of the work assigned to them?
+
+Discuss as a team and add your response here.
+
+# Policies & procedures
+
+What rules can you agree on to help you meet your goals and expectations?
+
+Discuss as a team and add your response here.
+
+# Consequences
+
+How will you address non-performance in regard to these goals, expectations, policies and procedures?
+
+Discuss as a team and add your response here.
+
+# Additional items
+
+Use the remaining space for any other items the team would like to discuss or plan out.
+
+Discuss as a team and add your response here.
+
+--------------------------------------------------------------------------------
+
+We share these goals and expectations, and agree to these policies, procedures, and consequences.
+
+Team member name:
+
+Team member name:
+
+Team member name:
+
+...

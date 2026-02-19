@@ -1,0 +1,24 @@
+---
+title: Add project title here
+subtitle: Report
+execute:
+  echo: true
+---
+
+Add 1-3 sentence project abstract here.
+
+## Introduction
+
+Add introduction section here.
+
+## Data
+
+Add data section here.
+
+## Analysis
+
+Add analysis section here.
+
+## Discussion
+
+Add discussion section here.

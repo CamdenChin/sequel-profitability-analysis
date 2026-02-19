@@ -41,26 +41,46 @@ library(tidyverse)
 
 ## Introduction and data
 
--   Identify the source of the data.
+-   This is a kaggle dataset that has all the imdb movies from 1893-2020
 
--   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
+-   The original way it was collected is not specified in the Kaggle Dataset, yet I assume it was web-scraped with a crawlerbecause there is data in the dataset that is not easily obtained from the premade dataset that you can download from IMDB such as the financial information like budget.
 
--   Write a brief description of the observations.
+-   From looking at the two csv's that were included in the kaggle dataset, it is split into movies and ratings. The movies csv has information about the description, actors, and directors. Meanwhile, the ratings has the average rating along with votes by age group break down
 
--   Address ethical concerns about the data. If none are identified, state that explicitly.
+-   The only ethical concern is if the crawler use went against the terms and services of IMDB but it is on Kaggle, so I would err on the side of not.
 
 ## Research question
 
--   A well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)
+-   Are young people contrarians? More generally, how does age correlate with popular movies. Are younger people more likely to less like popular movies in comparison to older age groups?
 
--   A description of the research topic along with a concise statement of your hypotheses on this topic.
+-   The topic is viewing the correlation with age and popularity of movies. I think due to the fact that before, at least from an American-centric view, there was more unity due to a lack of individualized media. Now due to more individual media such as tik tok, it may result in a less united collective identity which would means that we hypothesize younger people may be less likely to like popular movies in comparison to older age groups.
 
--   Identify the types of variables in your research question. Categorical? Numerical?
+-   We will have the numerical variables of the various age groups. We also plan to measure both by gross profit which well help to show how much a movie made thus how popular, and in terms of categorical variables using the votes as another way to perceive a movies likablity/popularity.
 
 ## Glimpse of data
 
 ```{r}
 #| label: load-data-2
 
-# add code here
+url <- "https://www.kaggle.com/api/v1/datasets/download/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020"
+
+temp <- tempfile(fileext = ".zip")
+download.file(url, temp, mode = "wb") # 'wb' is important for zip files on Windows/Mac
+
+# Unzip into a 'data' folder
+unzip(temp, exdir = "data")
+
+```
+
+
+```{r}
+#| label: Data-2-Exploration
+ratings <- read_csv("data/IMDb ratings.csv")
+movies <- read_csv("data/IMDb movies.csv")
+
+ratings |> 
+  head(5)
+movies |> 
+  head(5)
+
 ```

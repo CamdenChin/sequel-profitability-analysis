@@ -7,7 +7,7 @@ This project was developed by **\[Team GGPLOT]** For [STA 199: Introduction to D
 The team is comprised of the following team members.
 
 
--   Isha Omer: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
+-   Isha Omer: Junior from Kinston, North Carolina, studying Neuroscience. I don't have a LinkedIn </3
 -   Lexi Payne: Junior from Montreal, Canada studying Neuroscience. This is my LinkedIn: www.linkedin.com/in/alexandra-payne-9b1220292
 -   **David Boham**: Junior from Houston, Texas studying Computer Science. This is my LinkedIn: https://www.linkedin.com/in/dboham/
 -   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is my LinkedIn: https://www.linkedin.com/in/camden-chin/. 

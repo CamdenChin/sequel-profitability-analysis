@@ -23,72 +23,55 @@ All team members can refer to this document throughout the semester.
 
 -   What are your team goals for this project?
 
-Discuss as a team and add your response here.
+To develop an astute understanding of the statistical models that shape the world around us.
 
 -   What do you want to accomplish? What skills do you want to develop or refine?
 
-Discuss as a team and add your response here.
+Collaboration, problem-solving, communication, staying calm, resolving issues with grace, coordination, writing good commit messages, being clear and organized
 
 # Expectations
 
+Don't be passive aggressive but offer constructive criticism. Comunicate. If you don't understand something, reach out. It's okay to make mistakes, just communicate.
+
 ## Meetings
 
--   Meeting times: Identify a 1 - 2 hour weekly block outside of lab where the team can meet to work on assignments. All team members should block off this time on their calendar in case the team needs to meet to work on the project. Note: If you are unable to find a weekly time when the team can meet, briefly outline a plan to work on assignments outside of lab.
+Tuesdays at 3 work for all of us.
 
-Discuss as a team and add your response here.
-
--   Meeting location: Identify how or where the team will meet to work together (e.g. in-person, Zoom, Facetime, Google Hangouts). Be sure every member is able to access the in-person and/or virtual meeting space.
-
-Discuss as a team and add your response here.
+Facetime/zoom will be our meeting location.
 
 ## Communication
 
--   Method of communication: Identify the team's primary method of communication outside of meetings (e.g. GroupMe, Slack, text messages, etc.). Be sure all members are able to access the team's chosen communication platform.
+We made a IMessage groupchat We'll text in the chat if we can't make it to lab.
 
-Discuss as a team and add your response here.
-
--   Notifying team members: How should someone notify the other members if they are unable to attend lab or a scheduled team meeting?
-
-Discuss as a team and add your response here.
 
 ## Workflow
 
-While it's not productive to divvy up the entire project work at the beginning and bring all the pieces together at the end, there will be times throughout the semester you might decide to divvy up smaller portions of the work among the team members.
+We decided to finish our work 2 days before the actual deadline set by the class to figure out conflicts and clean up code and writing.
 
--   By when should everyone have their portion of the work completed? *Keep in mind your team will want to have time to review each portion before turning it in to make sure all pieces make sense together and any writing is cohesive.*
+Text in the chat, ask for help, don't be shy! Everyone has workloads spike up at different times.
 
-Discuss as a team and add your response here.
-
--   How should team members communicate if they're struggling with the portion of the work assigned to them?
-
-Discuss as a team and add your response here.
 
 # Policies & procedures
 
-What rules can you agree on to help you meet your goals and expectations?
-
-Discuss as a team and add your response here.
+Communicate, talk to each other, don't struggle in silence. If something's bothering you, speak up before it turns into a bigger issue.
 
 # Consequences
 
-How will you address non-performance in regard to these goals, expectations, policies and procedures?
-
-Discuss as a team and add your response here.
+We will communicate honestly and openly but not passively-aggressively. If things get bad, we'll talk to a TA to help us sort out.
 
 # Additional items
 
-Use the remaining space for any other items the team would like to discuss or plan out.
-
-Discuss as a team and add your response here.
-
+We want to plan out a dataset that everyone finds fun and everyone will enjoy to work on. We want this project to be fun rather than a burden. We want to work effectively as a team!!!
 --------------------------------------------------------------------------------
 
 We share these goals and expectations, and agree to these policies, procedures, and consequences.
 
-Team member name:
+Team member name: Camden Chin 
 
-Team member name:
+Team member name: Lexi Payne
 
-Team member name:
+Team member name: David Boham
+
+Team member name: Isha Omer
 
 ...

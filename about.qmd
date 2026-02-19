@@ -8,11 +8,8 @@ The team is comprised of the following team members.
 
 
 -   Isha Omer: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
--   David Boham: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
--   Team member 2: One sentence description of Team member 2 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
--   Team member 1: One sentence description of Team member 1 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
+-   Lexi Payne: Junior from Montreal, Canada studying Neuroscience. This is my LinkedIn: www.linkedin.com/in/alexandra-payne-9b1220292
 -   **David Boham**: Junior from Houston, Texas studying Computer Science. This is my LinkedIn: https://www.linkedin.com/in/dboham/
 -   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is my LinkedIn: https://www.linkedin.com/in/camden-chin/. 
--   Team member 3: One sentence description of Team member 3 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
--   Team member 4: One sentence description of Team member 4 (e.g., year, major, etc.). Optionally,  hyperlink the team name to homepage or social profile (LinkedIn, etc.)  of team member.
+
 -   ...

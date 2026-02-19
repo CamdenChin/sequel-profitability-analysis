@@ -13,7 +13,7 @@ library(tidyverse)
 
 ## Introduction and data
 
--   Identify the source of the data.
+-   The source of the data is kaggle.
 
 -   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
 

@@ -1,5 +1,10 @@
 ---
 title: Team contract
+author:
+  - name: Isha Omer
+  - name: Lexi Payne
+  - name: Camden Chin
+  - name: David Boham
 ---
 
 # Rationale

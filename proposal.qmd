@@ -1,5 +1,5 @@
 ---
-title: Add project title here
+title: Add project title her
 subtitle: Proposal
 ---
 

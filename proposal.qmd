@@ -103,9 +103,9 @@ glimpse(movie_with_sequels)
 
 ## Research question
 
--   Are young people contrarians? More generally, how does age correlate with popular movies. Are younger people more likely to less like popular movies in comparison to older age groups?
+-   Are young people contrarians? More generally, how does age correlate with popular movies. Are younger people more likely or less likely to like popular movies in comparison to older age groups?
 
-- This research question is important to investigate, especially for producers, as youger people tend to control box office revenue, so this question is vital for predicting profitability. It also shows cultural shifts.
+- This research question is important to investigate, especially for producers, as youger people tend to control box office revenue, so this question is vital for predicting profitability. It also shows cultural shifts. Popular movies will be defined as movies popular during the older age groups time and the younger age groups time so time-differences can be accounted for. Popularity will be defined as ratings within each age group - how highly the younger age group rated it, and how highly the older age group rated it.
 
 -   The topic is viewing the correlation with age and popularity of movies. I think due to the fact that before, at least from an American-centric view, there was more unity due to a lack of individualized media. Now due to more individual media such as tik tok, it may result in a less united collective identity which would means that we hypothesize younger people may be less likely to like popular movies in comparison to older age groups.
 

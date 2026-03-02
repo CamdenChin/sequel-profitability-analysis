@@ -109,7 +109,7 @@ glimpse(movie_with_sequels)
 
 -   The topic is viewing the correlation with age and popularity of movies. I think due to the fact that before, at least from an American-centric view, there was more unity due to a lack of individualized media. Now due to more individual media such as tik tok, it may result in a less united collective identity which would means that we hypothesize younger people may be less likely to like popular movies in comparison to older age groups.
 
--   We will have the numerical variables of the various age groups. We also plan to measure both by gross profit which well help to show how much a movie made thus how popular, and in terms of categorical variables using the votes as another way to perceive a movies likablity/popularity.
+-   We will have the numerical variables of the various age groups. We also plan to measure both by gross profit which well help to show how much a movie made thus how popular, and in terms of categorical variables using the votes as another way to perceive a movies likability/popularity.
 
 ## Glimpse of data
 

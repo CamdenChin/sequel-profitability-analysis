@@ -1,6 +1,41 @@
 ---
-title: Add project title here
+title: Movie Budgets, Revenue, and Sequels
 subtitle: Proposal
+project:
+  type: website
+  output-dir: docs
+  resources:
+    - presentation.pdf
+
+author:
+  - name: Isha Omer
+  - name: Lexi Payne
+  - name: Camden Chin
+  - name: David Boham
+
+website:
+  title: ggplot
+  navbar:
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Presentation
+        href: presentation.pdf  
+      - text: Proposal
+        href: proposal.qmd
+      - text: About
+        href: about.qmd
+      - text: Contract
+        href: contract.qmd
+    right:
+      - icon: github
+        href: "git@github.com:sta199-s26/" 
+
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
 ---
 
 ```{r}
@@ -13,14 +48,13 @@ library(tidyverse)
 
 ## Introduction and data
 
--   Identify the source of the data.
-The source of the data is kaggle
+-   This is a Kaggle data set with IMBd movies.
 
--   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
+-   The data was collecting by scraping from this website: https://data.world/priyankad0993. Although I'm not sure when it was created, it was last updated 3 years ago.
 
--   Write a brief description of the observations.
+-   There are two csv files in this kaggle dataset. The first csv file is called "Movies-Cleaned" and contains information about the movies such as title, release date, runtime, IMDb rating, if it's part of a movie series or not, what number is it in the series, and more. The second one is called "Movies with Sequels" and focuses more on the movies that actually have sequels, providing information on their title, genre, IMDb rating, runtime, and more.
 
--   Address ethical concerns about the data. If none are identified, state that explicitly.
+-   The only ethical concern is if the use went against the terms and services of IMDb but it is on Kaggle, so I would err on the side of not.
 
 ## Research question
 
@@ -32,38 +66,78 @@ The source of the data is kaggle
 
 - There are 4 main variables that we will be evaluating: sequel status, revenue, budget and revenue/budget ratio. Sequel status is a categorical variable, since the answer is either yes or no. Revenue is a numerical continuous variable since it can have a wide range of values and is measured in dollars. Budget is also a numerical continuous variable since it can have a wide range of values. Revenue/budget ratio is also a numerical (continuous) variable for the same reasons. A potential fifth variable is IMDB rating, which is also numerical (continuous), since it can have many different values ranging from 1-10(including decimals) and not just a select few options. 
 
+NOTE: In order to go along with this research question, we would most likely have to perform a join with another dataset, such as the the data set for our second proposal.
+
 ## Glimpse of data
 
 ```{r}
 #| label: load-data-1
 
-# add code here
+url_one <- "https://www.kaggle.com/api/v1/datasets/download/thedevastator/sequels-across-genres"
+
+temp_one <- tempfile(fileext = ".zip")
+download.file(url_one, temp_one, mode = "wb") # 'wb' is important for zip files on Windows/Mac
+
+# Unzip into a 'data' folder
+unzip(temp_one, exdir = "data")
+
+movie_sequels <- read_csv("data/Movies - Cleaned.csv")
+glimpse(movie_sequels)
+
+movie_with_sequels <- read_csv("data/Movies with sequels.csv")
+glimpse(movie_with_sequels)
+
 ```
 
 # Data 2
 
 ## Introduction and data
 
--   Identify the source of the data.
+-   This is a kaggle dataset that has all the imdb movies from 1893-2020
 
--   State when and how it was originally collected (by the original data curator, not necessarily how you found the data).
+-   The original way it was collected is not specified in the Kaggle Dataset, yet I assume it was web-scraped with a crawler because there is data in the dataset that is not easily obtained from the premade dataset that you can download from IMDB such as the financial information like budget. I'm not exactly sure when it was created, but the dataset was last updated two years ago.
 
--   Write a brief description of the observations.
+-   From looking at the two csv's that were included in the kaggle dataset, it is split into movies and ratings. The movies csv has information about the description, actors, and directors. Meanwhile, the ratings has the average rating along with votes by age group break down
 
--   Address ethical concerns about the data. If none are identified, state that explicitly.
+-   The only ethical concern is if the crawler use went against the terms and services of IMDB but it is on Kaggle, so I would err on the side of not.
 
 ## Research question
 
--   A well formulated research question. (You may include more than one research question if you want to receive feedback on different ideas for your project. However, one per data set is required.)
+-   Are young people contrarians? More generally, how does age correlate with popular movies. Are younger people more likely or less likely to like popular movies in comparison to older age groups?
 
--   A description of the research topic along with a concise statement of your hypotheses on this topic.
+- This research question is important to investigate, especially for producers, as youger people tend to control box office revenue, so this question is vital for predicting profitability. It also shows cultural shifts. Popular movies will be defined as movies popular during the older age groups time and the younger age groups time so time-differences can be accounted for. Popularity will be defined as ratings within each age group - how highly the younger age group rated it, and how highly the older age group rated it.
 
--   Identify the types of variables in your research question. Categorical? Numerical?
+-   The topic is viewing the correlation with age and popularity of movies. I think due to the fact that before, at least from an American-centric view, there was more unity due to a lack of individualized media. Now due to more individual media such as tik tok, it may result in a less united collective identity which would means that we hypothesize younger people may be less likely to like popular movies in comparison to older age groups.
+
+-   We will have the numerical variables of the various age groups. We also plan to measure both by gross profit which well help to show how much a movie made thus how popular, and in terms of categorical variables using the votes as another way to perceive a movies likability/popularity.
 
 ## Glimpse of data
 
 ```{r}
 #| label: load-data-2
 
-# add code here
+url <- "https://www.kaggle.com/api/v1/datasets/download/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020"
+
+temp <- tempfile(fileext = ".zip")
+download.file(url, temp, mode = "wb") # 'wb' is important for zip files on Windows/Mac
+
+# Unzip into a 'data' folder
+unzip(temp, exdir = "data")
+
+```
+
+
+```{r}
+#| label: Data-2-Exploration
+ratings <- read_csv("data/IMDb ratings.csv")
+movies <- read_csv("data/IMDb movies.csv")
+
+ratings |> 
+  head(5)
+movies |> 
+  head(5)
+
+glimpse(ratings)
+glimpse(movies)
+
 ```

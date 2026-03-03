@@ -124,8 +124,6 @@ download.file(url, temp, mode = "wb") # 'wb' is important for zip files on Windo
 # Unzip into a 'data' folder
 unzip(temp, exdir = "data")
 
-<<<<<<< HEAD
-=======
 ```
 
 
@@ -142,12 +140,11 @@ movies |>
 glimpse(ratings)
 glimpse(movies)
 
->>>>>>> ad0f8405b4476c4ba353fbea887a41a93045c7ef
 ```
 
 
 ```{r}
-#| label: Data-2-Exploration
+#| label: Data-2-Exploration-2
 ratings <- read_csv("data/IMDb ratings.csv")
 movies <- read_csv("data/IMDb movies.csv")
 

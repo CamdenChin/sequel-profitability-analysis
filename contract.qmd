@@ -128,7 +128,7 @@ imdb_full <- imdb_movies |>
 ```
 
 ```{r}
-#| label: join-both-datasets
+#| label: final-join-for-both-datasets
 #| 
 final_joined_data <- joined_sequel_data |>
   left_join(

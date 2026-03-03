@@ -75,3 +75,63 @@ Team member name: David Boham
 Team member name: Isha Omer
 
 ...
+
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(stringr)
+library(lubridate)
+
+#import movies data
+movies_cleaned <- read_csv("data/Movies - Cleaned.csv") |> clean_names()
+movies_sequels <- read_csv("data/Movies with sequels.csv") |> clean_names()
+
+```
+
+
+
+```{r}
+#| label: join-data-movies_cleaned_and_movies_sequels
+#joined both datasets from "data 1" from project proposal
+
+joined_sequel_data <- movies_cleaned |>
+  left_join(
+    movies_sequels,
+    by = c("title", "year"),
+    suffix = c("_cleaned", "_sequels")
+  )
+
+joined_sequel_data
+```
+
+```{r}
+#| label: import-imdb-data
+
+imdb_movies <- read_csv("data/IMDb movies.csv") |> clean_names()
+imdb_ratings <- read_csv("data/IMDb ratings.csv") |> clean_names()
+
+```
+```{r}
+#| label: join-imdb-data-info
+#joined both datasets from "data 2" from project proposal
+
+imdb_full <- imdb_movies |>
+  left_join(imdb_ratings, by = "imdb_title_id")
+
+```
+
+```{r}
+#| label: join-both-datasets
+#| 
+final_joined_data <- joined_sequel_data |>
+  left_join(
+    imdb_full,
+    by = c("title", "year"),
+    suffix = c("_sequels", "_imdb")
+  )
+
+final_joined_data
+```
+

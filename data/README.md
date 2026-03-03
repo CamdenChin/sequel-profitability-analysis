@@ -64,4 +64,40 @@ Add data dictionary to this file.
 - `non_us_voters_rating`: Average rating given by voters from outside the United States.
 - `non_us_voters_votes`: Number of votes from voters from outside the United States.
 
+<<<<<<< HEAD
 ## Data 2 subset 1
+=======
+## Data 2 subset 1: `Movies_Cleaned`
+
+- `Title`: Title of the movie. (String)
+- `Release Date`: When the movie was released. (Date)
+- `Year`: Year released in movie databases. (Integer)
+- `Description`: Short description of the movie. (String)
+- `URL`: URL link for the IMDb page of this result. (URL)
+- `IMDb Rating`: Rating for this movie on IMDb. (Float)
+- `Runtime (mins)`: Length of this in minutes. (Integer)
+- `Genres`: Genre belongs to this movie. (String)
+- `Num Votes`: Number of votes received on IMDb. (Number)
+- `Directors`: Who directed this movie. (String)
+- `Order in the Series`: If sequel has any its collected here. (Integer)
+- `Movie Series Name`: If sequel has any its collected here. (String)
+
+## Data 2 subset 2: `Movies_with_sequels`
+
+- `Position`: Ranking of the movie in the list. (Integer)
+- `Const`: Unique identifier for the movie. (String)
+- `Created`: Date the movie was added to the list. (Date)
+- `Modified`: Date the movie was last modified. (Date)
+- `Description`: Short description of the movie. (String)
+- `Title`: Title of the movie. (String)
+- `URL`: URL link for the IMDb page of this result. (URL)
+- `Title Type`: Type of movie (e.g., movie, TV series). (String)
+- `IMDb Rating`: Rating for this movie on IMDb. (Float)
+- `Runtime (mins)`: Length of this in minutes. (Integer)
+- `Year`: Year released in movie databases. (Integer)
+- `Genres`: Genre belongs to this movie. (String)
+- `Num Votes`: Number of votes received on IMDb. (Number)
+- `Release Date`: When the movie was released. (Date)
+- `Directors`: Who directed this movie. (String)
+...
+>>>>>>> ad0f8405b4476c4ba353fbea887a41a93045c7ef

@@ -3,7 +3,7 @@ title: Meet the team
 author: "Lexi Payne"
 ---
 
-This project was developed by **\[Team GGPLOT]** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
+This project was developed by **\Team GGPLOT** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
 The team is comprised of the following team members.
 
 
@@ -12,4 +12,4 @@ The team is comprised of the following team members.
 -   **David Boham**: Junior from Houston, Texas studying Computer Science. This is my LinkedIn: https://www.linkedin.com/in/dboham/
 -   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is my LinkedIn: https://www.linkedin.com/in/camden-chin/. 
 
--   ...
+   ...

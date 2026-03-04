@@ -156,6 +156,18 @@ final_joined_data |>
   )
 ```
 
+## Creating New Columns
+
+Since sequels often have much larger production budgets, simply comparing total income might not be a fair comparison. A movie with a huge budget might naturally bring in more income because of marketing, special effects, or brand recognition. Therefore, dividing income/budget to create a income-to-budget ratio will allow comparisons on how successful films are relative to how much money was invested in them.
+
+```{r}
+#| label: creating-revenue-budget-ratio
+
+final_joined_data <- final_joined_data |> 
+  mutate(income_budget_ratio = worlwide_gross_income / budget)
+```
+
+
 ## Analysis
 
 Add analysis section here.

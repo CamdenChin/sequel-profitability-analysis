@@ -5,15 +5,14 @@ project:
     - presentation.pdf
 
 author: # Replace with team member names
-  - name: Name of team member 1 
-  - name: Name of team member 2
-  - name: Name of team member 3
-  - name: Name of team member 4
-  - name: ...
-
+  - name: Isha Omer
+  - name: Lexi Payne
+  - name: Camden Chin
+  - name: David Boham
+  
 website:
   # Replace with team name
-  title: Team name 
+  title: Team Ggplot 
   navbar:
     left:
       - text: Home
@@ -28,8 +27,7 @@ website:
         href: contract.qmd
     right:
       - icon: github
-        # Replace with link to GitHub repo
-        href: "https://github.com/sta199-s26/" 
+        href: "https://github.com/sta199-s26/project-ggplot" 
 
 format:
   html:

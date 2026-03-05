@@ -220,6 +220,7 @@ final_joined_data |>
 #| label: plot-of-budget-vs-income
 #| fig-width: 8
 #| fig-asp: 0.7
+#| warning: false
 
 
 ggplot(final_joined_data,

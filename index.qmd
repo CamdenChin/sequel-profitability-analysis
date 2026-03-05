@@ -173,7 +173,7 @@ final_joined_data <- final_joined_data |>
 ## Analysis
 
 ```{r}
-#| label: Plot
+#| label: financial-success-plot
 #| warning: FALSE
 
 final_joined_data <- final_joined_data |>
@@ -190,6 +190,22 @@ final_joined_data |>
     x = "Worldwide income / budget (log scale)",
     y = "Movie type",
     title = "Relative financial success (income/budget): Originals vs Sequels"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: rating-plot
+
+final_joined_data |>
+  ggplot(aes(x = im_db_rating_cleaned, y = sequel_status , fill = sequel_status)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_x_log10() +
+  labs(
+    x = "IMDB Rating",
+    y = "Movie type",
+    title = "Relative rating success: Originals vs Sequels"
   ) +
   theme_minimal() +
   theme(legend.position = "none")

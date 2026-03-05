@@ -192,6 +192,9 @@ final_joined_data |>
     title = "Relative financial success (income/budget): Originals vs Sequels"
   ) +
   theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
   theme(legend.position = "none")
 ```
 
@@ -208,6 +211,9 @@ final_joined_data |>
     title = "Relative rating success: Originals vs Sequels"
   ) +
   theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
   theme(legend.position = "none")
 ```
 

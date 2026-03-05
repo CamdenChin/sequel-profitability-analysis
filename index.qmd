@@ -7,7 +7,7 @@ author:
   - name: Camden Chin
   - name: David Boham
 execute:
-  echo: true
+  echo: False
 ---
 
 Add 1-3 sentence project abstract here.
@@ -172,6 +172,7 @@ final_joined_data <- final_joined_data |>
 
 ```{r}
 #| label: Plot
+#| warning: FALSE
 
 final_joined_data <- final_joined_data |>
   filter(!is.na(order)) |>  # keep only movies that are part of a series
@@ -180,12 +181,12 @@ final_joined_data <- final_joined_data |>
   )
 
 final_joined_data |>
-  ggplot(aes(x = sequel_status, y = income_budget_ratio, fill = sequel_status)) +
+  ggplot(aes(x = income_budget_ratio, y = sequel_status , fill = sequel_status)) +
   geom_boxplot(alpha = 0.7) +
-  scale_y_log10() +
+  scale_x_log10() +
   labs(
-    x = "Movie type",
-    y = "Worldwide income / budget (log scale)",
+    x = "Worldwide income / budget (log scale)",
+    y = "Movie type",
     title = "Relative financial success (income/budget): Originals vs Sequels"
   ) +
   theme_minimal() +

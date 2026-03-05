@@ -216,6 +216,25 @@ final_joined_data |>
   ) +
   theme(legend.position = "none")
 ```
+```{r}
+#| label: plot-of-budget-vs-income
+#| fig-width: 8
+#| fig-asp: 0.7
+#| warning: false
+
+
+ggplot(final_joined_data,
+       aes(x = budget, y = worlwide_gross_income, color = sequel_status)) +
+  geom_point(alpha = 0.7) +
+  labs(
+    title = "Budget vs Revenue",
+    subtitle = "Of Original Movies vs Sequels",
+    x = "Budget",
+    y = "Worldwide Gross Income",
+    color = "Sequel Status"
+  ) +
+  geom_smooth(se = FALSE, linewidth = 0.5)
+```
 
 
 ```{r}

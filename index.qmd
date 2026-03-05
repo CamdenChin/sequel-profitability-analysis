@@ -97,6 +97,8 @@ datasets. The result, `joined_sequel_data`, retains all rows from
 ```{r}
 #| label: join-sequel-data
 #| message: false
+#| eval: false
+
 joined_sequel_data <- movies_cleaned |>
   left_join(
     movies_sequels,
@@ -171,7 +173,7 @@ final_joined_data <- final_joined_data |>
 ## Analysis
 
 ```{r}
-#| label: Plot
+#| label: financial-success-plot
 #| warning: FALSE
 
 final_joined_data <- final_joined_data |>
@@ -187,9 +189,31 @@ final_joined_data |>
   labs(
     x = "Worldwide income / budget (log scale)",
     y = "Movie type",
-    title = "Relative financial success (income/budget): Originals vs Sequels"
+    title = "Relative Financial Success (income/budget): Originals vs Sequels"
   ) +
   theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: rating-plot
+
+final_joined_data |>
+  ggplot(aes(x = im_db_rating_cleaned, y = sequel_status , fill = sequel_status)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_x_log10() +
+  labs(
+    x = "IMDB Rating",
+    y = "Movie type",
+    title = "Relative Rating Success: Originals vs Sequels"
+  ) +
+  theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
   theme(legend.position = "none")
 ```
 

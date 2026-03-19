@@ -30,6 +30,7 @@ library(janitor)
 library(stringr)
 library(lubridate)
 ```
+
 ```{r}
 #| label: import-data
 #| message: false
@@ -97,7 +98,6 @@ datasets. The result, `joined_sequel_data`, retains all rows from
 ```{r}
 #| label: join-sequel-data
 #| message: false
-#| eval: false
 
 joined_sequel_data <- movies_cleaned |>
   left_join(

@@ -10,7 +10,8 @@ execute:
   echo: False
 ---
 
-Add 1-3 sentence project abstract here.
+# Project Abstract
+Our project investigates the relative success of movie sequels compared to the original films by analyzing financial performance and IMDb ratings across 272 movies. We standardized financial success by creating an income-to-budget ratio metric, where we found that original films (median ratio ~ 4.0) slightly outperform sequels (median ratio ~3.7) and maintain higher audience ratings (6.9 vs. 6.2). Our findings suggest that despite the expectation of the pre-existing audience of franchises, original productions tend to achieve slightly greater  profitability.
 
 ## Introduction
 

@@ -174,6 +174,8 @@ final_joined_data <- final_joined_data |>
 
 To analyze whether sequels or original films performed better, we investigated two main variables: financial success and IMDb ratings.
 
+Financial success was the first variable measured. Again, it was computed by taking the ratio of income to budget, so financial success would be measured relative to the amount of money put into the film.
+
 ```{r}
 #| label: financial-success-plot
 #| warning: FALSE
@@ -211,11 +213,12 @@ final_joined_data |>
   )
 ```
 
-Financial success was computed by taking the ratio of income to budget, so financial success would be measured relative to the amount of money put into the film.
-
 The median income-to-budget ratio for original movies was about 4, while that of sequels or later films was about 3.7. Thus, a slight increase in the median financial success can be seen in original films compared to moves that succeed them. This same result is also seen in the graph, where the median of the income/budget ratio for original films is slightly higher than that of later films. However, it is important to note that the boxplots for both original and sequel-or-later films have outliers on both the higher and lower ends, showing there are movies in both categories that underperform and overperform. The distribution of original films' outliers shows more variability (in other words, the outliers span a greater distance), while the distribution of sequel-or-later films' outliers span a smaller distance, suggesting more predictable outcomes in seqeul-or-later films.
 
 Overall, the graph and summary statistics suggest original films have slightly greater financial success than sequel-or-later films.
+
+
+IMDb rating was the next variable analyzed.
 
 ```{r}
 #| label: rating-plot
@@ -246,9 +249,7 @@ final_joined_data |>
   )
 ```
 
-IMDb rating was the next variable analyzed.
-
-The median IMBdb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films.
+The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films.
 
 Overall, the graph and summary statistics suggest original films have slightly greater IMDd ratings than sequel-or-later films.
 

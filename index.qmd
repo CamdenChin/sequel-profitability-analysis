@@ -255,27 +255,6 @@ Overall, the graph and summary statistics suggest original films have slightly g
 
 
 
-```{r}
-#| label: plot-of-budget-vs-income
-#| fig-width: 8
-#| fig-asp: 0.7
-#| warning: false
-
-
-ggplot(final_joined_data,
-       aes(x = budget, y = worlwide_gross_income, color = sequel_status)) +
-  geom_point(alpha = 0.7) +
-  labs(
-    title = "Budget vs Revenue",
-    subtitle = "Of Original Movies vs Sequels",
-    x = "Budget",
-    y = "Worldwide Gross Income",
-    color = "Sequel Status"
-  ) +
-  geom_smooth(se = FALSE, method = "lm", linewidth = 0.5)
-```
-
-
 ## Discussion
 
   This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories - financial success and rating success. It was found that original films have greater success in both categories.

@@ -194,7 +194,8 @@ final_joined_data |>
   labs(
     x = "Worldwide income / budget (log scale)",
     y = "Movie type",
-    title = "Relative Financial Success (income/budget): Originals vs Sequels"
+    title = "Relative Financial Success (income/budget):
+    Originals vs Sequels"
   ) +
   theme_minimal() +
   scale_y_discrete(

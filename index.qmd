@@ -167,6 +167,8 @@ Since sequels often have much larger production budgets, simply comparing total 
 
 final_joined_data <- final_joined_data |> 
   mutate(income_budget_ratio = worlwide_gross_income / budget)
+
+
 ```
 
 

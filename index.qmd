@@ -289,49 +289,9 @@ final_joined_data |>
   knitr::kable(digits = 3)
 ```
 
-The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests  less consistent audience reception; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
+The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests  less consistent audience reception; additionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
 
 Overall, the graph and summary statistics suggest original films have slightly greater IMDd ratings than sequel-or-later films.
-
-
-
-```{r}
-#| label: plot-of-budget-vs-income
-#| fig-width: 8
-#| fig-asp: 0.7
-#| warning: false
-
-
-ggplot(final_joined_data,
-       aes(x = budget, y = worlwide_gross_income, color = sequel_status)) +
-  geom_point(alpha = 0.7) +
-  labs(
-    title = "Budget vs Revenue",
-    subtitle = "Of Original Movies vs Sequels",
-    x = "Budget",
-    y = "Worldwide Gross Income",
-    color = "Sequel Status"
-  ) +
-  geom_smooth(se = FALSE, method = "lm", linewidth = 0.5)
-```
-
-
-```{r}
-#| label: plot-of-budget-vs-income-2
-#| fig-width: 8
-#| fig-asp: 0.7
-ggplot(final_joined_data,
-       aes(x = budget, y = worlwide_gross_income, color = sequel_status)) +
-  geom_point(alpha = 0.7) +
-  labs(
-    title = "Budget vs Revenue",
-    subtitle = "Of Original Movies vs Sequels",
-    x = "Budget",
-    y = "Worldwide Gross Income",
-    color = "Sequel Status"
-  ) +
-  geom_smooth(se = FALSE, linewidth = 0.5)
-```
 
 
 ## Discussion

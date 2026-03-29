@@ -289,13 +289,12 @@ final_joined_data |>
   knitr::kable(digits = 3)
 ```
 
-The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films.
+The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests  less consistent audience reception; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
 
 Overall, the graph and summary statistics suggest original films have slightly greater IMDd ratings than sequel-or-later films.
 
 
 
-<<<<<<< HEAD
 ```{r}
 #| label: plot-of-budget-vs-income
 #| fig-width: 8
@@ -318,7 +317,7 @@ ggplot(final_joined_data,
 
 
 ```{r}
-#| label: plot-of-budget-vs-income
+#| label: plot-of-budget-vs-income-2
 #| fig-width: 8
 #| fig-asp: 0.7
 ggplot(final_joined_data,
@@ -335,13 +334,11 @@ ggplot(final_joined_data,
 ```
 
 
-=======
->>>>>>> 04c7bea7f316c56d950b70d2fbeedede54308ae5
 ## Discussion
 
   This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories - financial success and rating success. It was found that original films have greater success in both categories.
   
-  Financial success was calculated as an income-to-budget ratio, and the median for original films, around 4, was slightly higher than that of sequel-or-later films, about 3.7. In other words, original films, on average, earn more money relative to money invested. This suggests that even though sequel-or-later films often have a "fan base," or a group of people invested in the first film and wanting to watch more, this doesn't often lead to greater financial success. Thus, even though original films are "riskier" in the sense that filmmakers have no basis to conclude how their film might be perceived by audiences, they still tend to result in more income.
+  Financial success was calculated as an income-to-budget ratio, and the median for original films, around 4, was slightly higher than that of sequel-or-later films, about 3.7. In other words, original films, on average, earn more money relative to money invested. This suggests that even though sequel-or-later films often have a "fan base," or a group of people invested in the first film and wanting to watch more, this doesn't often lead to greater financial success. Thus, even though original films are "riskier" in the sense that filmmakers have no basis to conclude how their film might be perceived by audiences, they still tend to result in more income. This could influence how directors and creators of films choose which projects to take on.
   
   IMDb ratings were used to measure rating success, and again, the median IMDb rating for original films (6.9 out of 10) was higher than that of sequel-or-later films (6.2 out of 10). Factors that can explain decreased ratings for sequel-or-later films include a decline in the novelty of the film's plot, higher expectations that the first film established leading to a sense of being let down, and the phenomenon of "franchise fatigue," where viewers no longer look forward to a continuation of a story due to issues such as decreasing quality or lack of originality.
   

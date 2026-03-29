@@ -115,7 +115,6 @@ joined_sequel_data <- movies_cleaned |>
     suffix = c("_cleaned", "_sequels")
   )
 
-head(joined_sequel_data, 5)
 ```
 
 The two IMDb datasets are joined using `imdb_title_id` as the key, which is a 
@@ -149,7 +148,6 @@ final_joined_data <- joined_sequel_data |>
   ungroup() |>
   filter(year_diff <= 2)
 
-head(final_joined_data, 5)
 ```
 
 ## Join Summary
@@ -160,11 +158,14 @@ complete dataset to work with for the rest of the analysis.
 ```{r}
 #| label: join-summary
 #| message: false
-final_joined_data |>
-  summarise(
-    matched   = sum(!is.na(imdb_title_id)),
-    unmatched = sum(is.na(imdb_title_id))
+
+invisible(
+  final_joined_data |>
+    summarise(
+      matched   = sum(!is.na(imdb_title_id)),
+      unmatched = sum(is.na(imdb_title_id))
   )
+)
 ```
 
 ## Creating New Columns

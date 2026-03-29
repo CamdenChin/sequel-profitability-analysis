@@ -8,6 +8,7 @@ author:
   - name: David Boham
 execute:
   echo: False
+  warning: False
 ---
 
 # Project Abstract
@@ -16,10 +17,17 @@ Our project investigates the relative success of movie sequels compared to the o
 ## Introduction
 
 This project investigates whether movie sequels are more or less successful than 
-their originals. Using two datasets — a curated list of movies with sequels and 
-IMDb ratings and financial data — we explore how sequel performance compares 
-across metrics like ratings and box office revenue. All data was sourced from
-IMDb and compiled for the STA 199 course project.
+their originals. Using two data sets — a curated list of movies with sequels and 
+IMDb ratings and financial data — our research question is, do sequels or originals perform better
+across metrics like ratings and box office revenue when accounting for budget?
+
+Project motivations were both silly and serious. All of us are big movie lovers and wanted to do something fun and lighthearted and lean into our hobbies. Additionally, one of us hopes to pursue film making after graduation. More "serious" motivations for the project include wanting to see if there are statistical bases for phenomena such as "franchise fatigue" and wanting to explore the risks filmmakers have to consider when releasing originals vs. sequels.
+
+All data was sourced from IMDb and compiled for the STA 199 course project. Where users submit ratings and professionals/scrapers provide financial figures. The data sets were taken from Kaggle:
+
+[IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
+
+[Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
 ## Data 
 ```{r}
@@ -107,7 +115,6 @@ joined_sequel_data <- movies_cleaned |>
     suffix = c("_cleaned", "_sequels")
   )
 
-head(joined_sequel_data, 5)
 ```
 
 The two IMDb datasets are joined using `imdb_title_id` as the key, which is a 
@@ -141,8 +148,16 @@ final_joined_data <- joined_sequel_data |>
   ungroup() |>
   filter(year_diff <= 2)
 
-head(final_joined_data, 5)
 ```
+## Data Definitions
+
+* **`title`**: Official name of the movie, used as the primary key for joining datasets.
+* **`year`**: Release year, used to guarantee correct matching between sequels and originals.
+* **`budget`**: Production cost of the movie.
+* **`worlwide_gross_income`**: Total revenue generated globally.
+* **`income_budget_ratio`**: A self-derived metric calculated as $\frac{\text{worldwide\_gross\_income}}{\text{budget}}$. This standardizes financial success relative to the initial budget.
+* **`im_db_rating_cleaned`**: Weighted average of user vote from IMDb on a scale of 1–10.
+* **`sequel_status`**: Labels films as either "Original" or "Sequel or Later".
 
 ## Join Summary
 
@@ -152,11 +167,14 @@ complete dataset to work with for the rest of the analysis.
 ```{r}
 #| label: join-summary
 #| message: false
-final_joined_data |>
-  summarise(
-    matched   = sum(!is.na(imdb_title_id)),
-    unmatched = sum(is.na(imdb_title_id))
+
+invisible(
+  final_joined_data |>
+    summarise(
+      matched   = sum(!is.na(imdb_title_id)),
+      unmatched = sum(is.na(imdb_title_id))
   )
+)
 ```
 
 ## Creating New Columns
@@ -168,6 +186,8 @@ Since sequels often have much larger production budgets, simply comparing total 
 
 final_joined_data <- final_joined_data |> 
   mutate(income_budget_ratio = worlwide_gross_income / budget)
+
+
 ```
 
 
@@ -194,7 +214,8 @@ final_joined_data |>
   labs(
     x = "Worldwide income / budget (log scale)",
     y = "Movie type",
-    title = "Relative Financial Success (income/budget): Originals vs Sequels"
+    title = "Relative Financial Success (income/budget):
+    Originals vs Sequels"
   ) +
   theme_minimal() +
   scale_y_discrete(
@@ -210,8 +231,17 @@ final_joined_data |>
 final_joined_data |> 
   group_by(sequel_status) |> 
   summarize(
-    median = median(income_budget_ratio, na.rm = TRUE)
-  )
+    Median = median(income_budget_ratio, na.rm = TRUE)
+  ) |> 
+  mutate(
+    sequel_status = stringr::str_replace_all(sequel_status, "_", " "),
+    sequel_status = stringr::str_to_title(sequel_status)
+  ) |> 
+   rename(
+    "Sequel Status" = sequel_status,
+    "Median" = Median
+  ) |> 
+  knitr::kable(digits = 2)
 ```
 
 The median income-to-budget ratio for original movies was about 4, while that of sequels or later films was about 3.7. Thus, a slight increase in the median financial success can be seen in original films compared to moves that succeed them. This same result is also seen in the graph, where the median of the income/budget ratio for original films is slightly higher than that of later films. However, it is important to note that the boxplots for both original and sequel-or-later films have outliers on both the higher and lower ends, showing there are movies in both categories that underperform and overperform. The distribution of original films' outliers shows more variability (in other words, the outliers span a greater distance), while the distribution of sequel-or-later films' outliers span a smaller distance, suggesting more predictable outcomes in seqeul-or-later films.
@@ -246,8 +276,17 @@ final_joined_data |>
 final_joined_data |> 
   group_by(sequel_status) |> 
   summarize(
-    median = median(im_db_rating_cleaned)
-  )
+    Median = median(im_db_rating_cleaned)
+  ) |> 
+  mutate(
+    sequel_status = stringr::str_replace_all(sequel_status, "_", " "),
+    sequel_status = stringr::str_to_title(sequel_status)
+  ) |> 
+  rename(
+    "Sequel Status" = sequel_status,
+    "Median" = Median
+  ) |> 
+  knitr::kable(digits = 3)
 ```
 
 The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability; aditionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films.
@@ -256,6 +295,7 @@ Overall, the graph and summary statistics suggest original films have slightly g
 
 
 
+<<<<<<< HEAD
 ```{r}
 #| label: plot-of-budget-vs-income
 #| fig-width: 8
@@ -295,6 +335,8 @@ ggplot(final_joined_data,
 ```
 
 
+=======
+>>>>>>> 04c7bea7f316c56d950b70d2fbeedede54308ae5
 ## Discussion
 
   This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories - financial success and rating success. It was found that original films have greater success in both categories.

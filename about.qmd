@@ -1,15 +1,19 @@
 ---
 title: Meet the team
-author: "Lexi Payne"
+author:
+  - name: Isha Omer
+  - name: Lexi Payne
+  - name: Camden Chin
+  - name: David Boham
 ---
 
 This project was developed by **\Team GGPLOT** For [STA 199: Introduction to Data Science](https://sta199-s26.github.io/) at Duke University.
 The team is comprised of the following team members.
 
 
--   Isha Omer: Junior from Kinston, North Carolina, studying Neuroscience. I don't have a LinkedIn </3
--   Lexi Payne: Junior from Montreal, Canada studying Neuroscience. This is my LinkedIn: www.linkedin.com/in/alexandra-payne-9b1220292   
--   **David Boham**: Junior from Houston, Texas studying Computer Science. This is my LinkedIn: https://www.linkedin.com/in/dboham/
--   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is my LinkedIn: https://www.linkedin.com/in/camden-chin/. 
+-   Isha Omer: Junior from Kinston, North Carolina, studying Neuroscience. She does not have a LinkedIn </3
+-   Lexi Payne: Junior from Montreal, Canada studying Neuroscience. This is her LinkedIn: www.linkedin.com/in/alexandra-payne-9b1220292   
+-   **David Boham**: Junior from Houston, Texas studying Computer Science. This is his LinkedIn: https://www.linkedin.com/in/dboham/
+-   **Camden Chin**: Senior from New York City studying Computer Science and Visual Media. This is his LinkedIn: https://www.linkedin.com/in/camden-chin/. 
 
    ...

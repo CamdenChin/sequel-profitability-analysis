@@ -308,8 +308,21 @@ Overall, the graph and summary statistics suggest original films have slightly g
   
   A final limitation is the use of IMDb ratings as an indicator for how the movies were perceived by the audience. IMDb ratings may be susceptible to problems like response bias and may not be representative of the actual quality of the movie if users are voting based on other factors, such as rating movies higher if it includes their favorite actors. A possible improvement to address this issue is that other variables could be taken into account to get a more reliable overall rating score, such as by also considering critics' scores.
   
-Citations:
-[Franchise Fatigue](https://drive.google.com/file/d/1PWhOnjvMQa00je5yCjWHsFqEL2UcRn4q/view)
+References:
+[Franchise Fatigue](https://www.licenseglobal.com/movies/trending-what-is-franchise-fatigue-and-is-it-real)
+
+"Trending: What Is Franchise Fatigue, and Is It Real?" License Global, www.licenseglobal.com/movies/trending-what-is-franchise-fatigue-and-is-it-real.
+
 [IMDb Rating Limitations](https://www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl)
+
+“The Problem with Imdb’s Rating System.” The Ringer, www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl.
+
+[IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
+
+Mudigoudr, Sharath. “Imdb Movie Dataset from Year 1893 to 2020.” Kaggle, 30 Mar. 2024, www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data. 
+
+[Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
+
+Cpbdev. “Sequels_dataset.” Kaggle, 16 Feb. 2023, www.kaggle.com/code/cpbdev/sequels-dataset/input. 
 
   

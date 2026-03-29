@@ -30,6 +30,8 @@ All data was sourced from IMDb and compiled for the STA 199 course project. Wher
 [Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
 ## Data 
+
+Data sets were taken from Kaggle and were collected by web scraping the IMDb website and putting together information from the IMDb database.
 ```{r}
 #| label: load-libraries
 #| message: false

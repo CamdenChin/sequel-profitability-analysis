@@ -23,7 +23,7 @@ across metrics like ratings and box office revenue when accounting for budget?
 
 Project motivations were both silly and serious. All of us are big movie lovers and wanted to do something fun and lighthearted and lean into our hobbies. Additionally, one of us hopes to pursue film making after graduation. More "serious" motivations for the project include wanting to see if there are statistical bases for phenomena such as "franchise fatigue" and wanting to explore the risks filmmakers have to consider when releasing originals vs. sequels.
 
-All data was sourced from IMDb and compiled for the STA 199 course project. Data sets were taken from Kaggle:
+All data was sourced from IMDb and compiled for the STA 199 course project. Where users submit ratings and professionals/scrapers provide financial figures. The data sets were taken from Kaggle:
 
 [IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
 
@@ -149,6 +149,15 @@ final_joined_data <- joined_sequel_data |>
   filter(year_diff <= 2)
 
 ```
+## Data Definitions
+
+* **`title`**: Official name of the movie, used as the primary key for joining datasets.
+* **`year`**: Release year, used to guarantee correct matching between sequels and originals.
+* **`budget`**: Production cost of the movie.
+* **`worlwide_gross_income`**: Total revenue generated globally.
+* **`income_budget_ratio`**: A self-derived metric calculated as $\frac{\text{worldwide\_gross\_income}}{\text{budget}}$. This standardizes financial success relative to the initial budget.
+* **`im_db_rating_cleaned`**: Weighted average of user vote from IMDb on a scale of 1–10.
+* **`sequel_status`**: Labels films as either "Original" or "Sequel or Later".
 
 ## Join Summary
 

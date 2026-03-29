@@ -8,6 +8,7 @@ author:
   - name: David Boham
 execute:
   echo: False
+  warning: False
 ---
 
 # Project Abstract
@@ -16,10 +17,17 @@ Our project investigates the relative success of movie sequels compared to the o
 ## Introduction
 
 This project investigates whether movie sequels are more or less successful than 
-their originals. Using two datasets — a curated list of movies with sequels and 
-IMDb ratings and financial data — we explore how sequel performance compares 
-across metrics like ratings and box office revenue. All data was sourced from
-IMDb and compiled for the STA 199 course project.
+their originals. Using two data sets — a curated list of movies with sequels and 
+IMDb ratings and financial data — our research question is, do sequels or originals perform better
+across metrics like ratings and box office revenue when accounting for budget?
+
+Project motivations were both silly and serious. All of us are big movie lovers and wanted to do something fun and lighthearted and lean into our hobbies. Additionally, one of us hopes to pursue film making after graduation. More "serious" motivations for the project include wanting to see if there are statistical bases for phenomena such as "franchise fatigue" and wanting to explore the risks filmmakers have to consider when releasing originals vs. sequels.
+
+All data was sourced from IMDb and compiled for the STA 199 course project. Data sets were taken from Kaggle:
+
+[IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
+
+[Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
 ## Data 
 ```{r}

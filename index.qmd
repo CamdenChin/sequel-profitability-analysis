@@ -207,6 +207,8 @@ Financial success was the first variable measured. Again, it was computed by tak
 #| label: financial-success-plot
 #| warning: FALSE
 
+all_films <- final_joined_data
+
 final_joined_data <- final_joined_data |>
   filter(!is.na(order)) |>  # keep only movies that are part of a series
   mutate(
@@ -228,8 +230,16 @@ final_joined_data |>
     labels = c("Original", "Sequel or Later")
   ) +
   theme(legend.position = "none")
+
 ```
 
+```{r}
+standalone_films <- imdb_full |>
+  filter(!is.na(budget), !is.na(worlwide_gross_income),
+         budget > 0) |>
+  anti_join(final_joined_data, by = "imdb_title_id") |>   # remove franchise films
+  mutate(income_budget_ratio = worlwide_gross_income / budget)
+```
 
 ```{r}
 #| label: budget-median
@@ -577,6 +587,39 @@ model_check <- lm(log(sequel_ratio) ~ log(original_ratio) + original_rating +
                   data = pairs[-c(5, 40, pa_row), ])
 summary(model_check)
 ```
+
+### Which standalone movies should have gotten sequels??
+
+
+```{r}
+standalone_films <- imdb_full |>
+  filter(!is.na(budget), !is.na(worlwide_gross_income),
+         budget > 0, worlwide_gross_income > 0,
+         str_detect(country, "USA")) |>          # avoid currency mismatch trap
+  anti_join(final_joined_data, by = "imdb_title_id") |>
+  mutate(income_budget_ratio = worlwide_gross_income / budget) |>
+  filter(is.finite(income_budget_ratio), income_budget_ratio > 0)
+
+nrow(standalone_films)   # how big is our candidate pool?
+
+# Rename to what the model expects, assume typical 3-year turnaround
+candidates <- standalone_films |>
+  filter(budget >= 1e4) |>
+  mutate(
+    original_ratio  = income_budget_ratio,
+    original_rating = weighted_average_vote,
+    original_budget = budget,
+    gap_years       = 3
+  )
+
+candidates |>
+  mutate(predicted_sequel_ratio = exp(predict(model, newdata = candidates))) |>
+  arrange(desc(predicted_sequel_ratio)) |>
+  select(original_title, year, budget, income_budget_ratio,
+         weighted_average_vote, predicted_sequel_ratio) |>
+  head(30)
+```
+
 
 ## Discussion
 

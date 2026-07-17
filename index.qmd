@@ -419,6 +419,165 @@ but not lapsed momentum. (Note also that the very lowest ratios, such as
 largely direct-to-video, where theatrical gross understates total
 revenue.)
 
+### Predicting Sequel Performance
+
+The descriptive results raise a practical question: if a studio has an
+original film in hand, can its characteristics predict how a sequel would
+perform? To explore this, we restructure the data so that each observation
+is a franchise pair — the original film's characteristics alongside its
+second installment's outcome — and fit a linear regression predicting the
+sequel's income-to-budget ratio.
+
+```{r}
+#| label: build-pairs
+#| message: false
+#| warning: false
+
+pairs <- final_joined_data |>
+  filter(order <= 2) |>
+  group_by(movie_series, order) |>
+  slice_min(year_diff, n = 1, with_ties = FALSE) |>  # resolve duplicate title matches
+  ungroup() |>
+  select(movie_series, order, year_sequels,
+         income_budget_ratio, im_db_rating_cleaned,
+         budget) |>
+  pivot_wider(
+    id_cols     = movie_series,
+    names_from  = order,
+    values_from = c(income_budget_ratio, im_db_rating_cleaned,
+                    budget, year_sequels)
+  ) |>
+  rename(
+    original_ratio   = income_budget_ratio_1,
+    sequel_ratio     = income_budget_ratio_2,
+    original_rating  = im_db_rating_cleaned_1,
+    original_budget  = budget_1,
+    year_original    = year_sequels_1,
+    year_sequel      = year_sequels_2
+  ) |>
+  mutate(gap_years = year_sequel - year_original) |>
+  filter(!is.na(sequel_ratio), !is.na(original_ratio),
+         is.finite(sequel_ratio), is.finite(original_ratio),
+         original_budget > 0)
+```
+
+Complete data for both halves of a pair survives the joins for
+`r nrow(pairs)` franchises. We model the log of the sequel's
+income-to-budget ratio as a function of four characteristics of the
+original: its own income-to-budget ratio (logged), its IMDb rating, its
+production budget (logged), and the number of years between the original
+and the sequel. Monetary variables are logged because return ratios are
+heavily right-skewed — a small number of extreme performers would
+otherwise dominate the fit.
+
+```{r}
+#| label: sequel-model
+
+model <- lm(log(sequel_ratio) ~ log(original_ratio) + original_rating +
+              log(original_budget) + gap_years,
+            data = pairs)
+
+broom::tidy(model) |>
+  mutate(term = case_when(
+    term == "(Intercept)"          ~ "Intercept",
+    term == "log(original_ratio)"  ~ "Original's income/budget (log)",
+    term == "original_rating"      ~ "Original's IMDb rating",
+    term == "log(original_budget)" ~ "Original's budget (log)",
+    term == "gap_years"            ~ "Years between films"
+  )) |>
+  rename(
+    "Predictor" = term,
+    "Estimate" = estimate,
+    "Std. Error" = std.error,
+    "t" = statistic,
+    "p-value" = p.value
+  ) |>
+  knitr::kable(digits = 3)
+```
+
+```{r}
+#| label: sequel-model-fit
+
+broom::glance(model) |>
+  select(r.squared, adj.r.squared, nobs) |>
+  rename(
+    "R-squared" = r.squared,
+    "Adjusted R-squared" = adj.r.squared,
+    "N (franchise pairs)" = nobs
+  ) |>
+  knitr::kable(digits = 3)
+
+plot(model, which = 1)
+```
+
+The model explains roughly 60% of the variation in sequel returns
+(adjusted R² = 0.60), and its results reinforce the decoupling theme from
+the installment analysis:
+
+**The original's profitability is the dominant predictor.** The
+coefficient on the original's (logged) income-to-budget ratio is 0.53
+(p < 0.001). Because both variables are logged, this is interpretable as
+an elasticity: a 1% more profitable original predicts a roughly 0.53%
+more profitable sequel. Notably, the elasticity is well below 1 —
+sequels inherit their parent's economics, but with substantial regression
+to the mean. Exceptional originals tend to produce good, but less
+exceptional, sequels.
+
+**The original's audience rating predicts nothing.** Controlling for the
+original's profitability, its IMDb rating has essentially no relationship
+with sequel returns (coefficient ≈ 0.02, p = 0.89). This is the
+regression-based counterpart of the installment finding: how much
+audiences *liked* the original carries no measurable information about
+how much its sequel will *earn*, once the original's financial
+performance is known. A studio deciding whether to greenlight a sequel
+would, on this evidence, learn more from the original's balance sheet
+than from its reviews.
+
+**Larger-budget originals predict better sequel returns.** The
+coefficient on the original's (logged) budget is positive (0.16,
+p = 0.049) — controlling for profitability, sequels of bigger-budget
+originals return more per dollar. One interpretation is that budget
+proxies for studio commitment: marketing infrastructure, distribution
+reach, and franchise-building intent that carry over into the sequel.
+However, this estimate sits at the boundary of conventional significance
+in a small sample and should be treated as tentative.
+
+**Longer gaps point in the expected direction, but are not significant.**
+Each additional year between the original and its sequel is associated
+with roughly 2% lower sequel returns (coefficient −0.019), consistent
+with the broken-momentum pattern visible in the flop analysis (*Basic
+Instinct 2*, *Zoolander 2*). With 44 pairs, however, the estimate does
+not reach statistical significance (p = 0.21). We treat the momentum
+hypothesis as directionally supported but unconfirmed at this sample
+size.
+
+Several caveats apply. This is an exploratory model on 44 franchise
+pairs — those that both received a sequel and survived the data joins
+with complete financial information — so the estimates describe
+sequels that were made, not the full universe of sequels a studio might
+consider. Selection is therefore built into the sample: studios
+presumably declined the least promising sequels, which restricts the
+range of the data. The relatively high R² also warrants caution, as both
+outcome and predictors were derived from the same data pipeline, and a
+small number of extreme franchises may exert outsized influence on the
+fit.
+
+```{r}
+pairs[c(5, 40), ] |> select(movie_series, original_ratio, sequel_ratio, gap_years)
+
+# and the high-fitted-value point:
+pairs |> slice_max(original_ratio, n = 1) |>
+  select(movie_series, original_ratio, sequel_ratio)
+```
+```{r}
+pa_row <- which(pairs$movie_series == "Paranormal Activity")
+
+model_check <- lm(log(sequel_ratio) ~ log(original_ratio) + original_rating +
+                    log(original_budget) + gap_years,
+                  data = pairs[-c(5, 40, pa_row), ])
+summary(model_check)
+```
+
 ## Discussion
 
   This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories — financial success and rating success. At the aggregate level, original films have greater success in both categories; at the installment level, however, the relationship between the two kinds of success comes apart in an interesting way.

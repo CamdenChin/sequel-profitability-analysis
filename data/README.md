@@ -1,103 +1,661 @@
-# data
+---
+title: "Sequels: More or Less Successful"
+subtitle: Report
+author: 
+  - name: Isha Omer
+  - name: Lexi Payne
+  - name: Camden Chin
+  - name: David Boham
+execute:
+  echo: False
+  warning: False
+---
 
-Place dataset(s) in this folder.
+# Project Abstract
+Our project investigates the relative success of movie sequels compared to the original films by analyzing financial performance and IMDb ratings across 272 movies. We standardized financial success by creating an income-to-budget ratio metric, where we found that original films (median ratio ~4.0) slightly outperform sequels (median ratio ~3.7) and maintain higher audience ratings (6.9 vs. 6.2). An installment-level analysis further reveals that while audience ratings decline monotonically across a franchise (6.9 → 6.4 → 6.1), financial returns recover by the third installment, suggesting franchise earning power decouples from audience reception over time. An exploratory regression on 44 franchise pairs reinforces this: the original film's profitability strongly predicts its sequel's returns, while its audience rating predicts nothing. Our findings suggest that despite the expectation of the pre-existing audience of franchises, original productions tend to achieve slightly greater profitability — but that established franchises retain box-office pull largely independent of per-film quality.
 
-Add data dictionary to this file.
+## Introduction
 
-## Data 1 subset 1: `IMDb_movies`
+This project investigates whether movie sequels are more or less successful than 
+their originals. Using two data sets — a curated list of movies with sequels and 
+IMDb ratings and financial data — our research question is, do sequels or originals perform better
+across metrics like ratings and box office revenue when accounting for budget?
 
-- `imdb_title_id`: Unique identifier for each movie in the IMDb database.
-- `title`: Title of the movie.
-- `original_title`: Original title of the movie (may differ from the localized title).
-- `year`: Year of release of the movie.
-- `date_published`: Date when the movie was published or released.
-- `genre`: Genre(s) to which the movie belongs.
-- `duration`: Duration of the movie in minutes.
-- `country`: Country or countries where the movie was produced or filmed.
-- `language`: Language(s) spoken in the movie.
-- `director`: Director(s) of the movie.
-- `writer`: Writer(s) of the screenplay or story for the movie.
-- `production_company`: Production company or companies involved in producing the movie.
-- `actors`: Main actors or cast members of the movie.
-- `description`: Brief description or summary of the movie's plot or storyline.
-- `avg_vote`: Average rating or vote score given to the movie by IMDb users.
-- `votes`: Total number of votes received by the movie on IMDb.
-- `budget`: Budget allocated for producing the movie.
-- `usa_gross_income`: Gross income or revenue generated from the movie's release in the United States.
-- `worlwide_gross_income`: Gross income or revenue generated from the movie's release worldwide.
-- `metascore`: Metascore rating assigned to the movie by critics (if available).
-- `reviews_from_users`: Number of user reviews or ratings submitted for the movie.
-- `reviews_from_critics`: Number of reviews or ratings given by critics for the movie.
+Project motivations were both silly and serious. All of us are big movie lovers and wanted to do something fun and lighthearted and lean into our hobbies. Additionally, one of us hopes to pursue film making after graduation. More "serious" motivations for the project include wanting to see if there are statistical bases for phenomena such as "franchise fatigue" and wanting to explore the risks filmmakers have to consider when releasing originals vs. sequels.
 
-## Data 1 subset 2: `IMDb_ratings`
-- `imdb_title_id`: Unique identifier for each movie in the IMDb database.
-- `weighted_average_vote`: Weighted average rating or vote score given to the movie.
-- `total_votes`: Total number of votes received by the movie.
-- `mean_vote`: Mean or average vote score given to the movie.
-- `median_vote`: Median vote score given to the movie.
-- `votes_10`: Number of votes rating the movie as 10.
-- `votes_9`: Number of votes rating the movie as 9.
-- `votes_8`: Number of votes rating the movie as 8.
-- `votes_7`: Number of votes rating the movie as 7.
-- `votes_6`: Number of votes rating the movie as 6.
-- `votes_5`: Number of votes rating the movie as 5.
-- `votes_4`: Number of votes rating the movie as 4.
-- `votes_3`: Number of votes rating the movie as 3.
-- `votes_2`: Number of votes rating the movie as 2.
-- `votes_1`: Number of votes rating the movie as 1.
-- `allgenders_0age_avg_vote`: Average vote score given by viewers of all genders in the 0-18 age group.
-- `allgenders_0age_votes`: Number of votes from viewers of all genders in the 0-18 age group.
-- `allgenders_18age_avg_vote`: Average vote score given by viewers of all genders in the 18-30 age group.
-- `allgenders_18age_votes`: Number of votes from viewers of all genders in the 18-30 age group.
-- `allgenders_30age_avg_vote`: Average vote score given by viewers of all genders in the 30-45 age group.
-- `allgenders_30age_votes`: Number of votes from viewers of all genders in the 30-45 age group.
-- `allgenders_45age_avg_vote`: Average vote score given by viewers of all genders in the 45+ age group.
-- `allgenders_45age_votes`: Number of votes from viewers of all genders in the 45+ age group.
-- `males_allages_avg_vote`: Average vote score given by male viewers of all ages.
-- `males_allages_votes`: Number of votes from male viewers of all ages.
-- `females_allages_avg_vote`: Average vote score given by female viewers of all ages.
-- `females_allages_votes`: Number of votes from female viewers of all ages.
-- `top1000_voters_rating`: Average rating given by the top 1000 voters.
-- `top1000_voters_votes`: Number of votes from the top 1000 voters.
-- `us_voters_rating`: Average rating given by voters from the United States.
-- `us_voters_votes`: Number of votes from voters from the United States.
-- `non_us_voters_rating`: Average rating given by voters from outside the United States.
-- `non_us_voters_votes`: Number of votes from voters from outside the United States.
+All data was sourced from IMDb and compiled for the STA 199 course project. Where users submit ratings and professionals/scrapers provide financial figures. The data sets were taken from Kaggle:
 
-<<<<<<< HEAD
-## Data 2 subset 1
-=======
-## Data 2 subset 1: `Movies_Cleaned`
+[IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
 
-- `Title`: Title of the movie. (String)
-- `Release Date`: When the movie was released. (Date)
-- `Year`: Year released in movie databases. (Integer)
-- `Description`: Short description of the movie. (String)
-- `URL`: URL link for the IMDb page of this result. (URL)
-- `IMDb Rating`: Rating for this movie on IMDb. (Float)
-- `Runtime (mins)`: Length of this in minutes. (Integer)
-- `Genres`: Genre belongs to this movie. (String)
-- `Num Votes`: Number of votes received on IMDb. (Number)
-- `Directors`: Who directed this movie. (String)
-- `Order in the Series`: If sequel has any its collected here. (Integer)
-- `Movie Series Name`: If sequel has any its collected here. (String)
+[Sequel data set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
-## Data 2 subset 2: `Movies_with_sequels`
+## Data 
 
-- `Position`: Ranking of the movie in the list. (Integer)
-- `Const`: Unique identifier for the movie. (String)
-- `Created`: Date the movie was added to the list. (Date)
-- `Modified`: Date the movie was last modified. (Date)
-- `Description`: Short description of the movie. (String)
-- `Title`: Title of the movie. (String)
-- `URL`: URL link for the IMDb page of this result. (URL)
-- `Title Type`: Type of movie (e.g., movie, TV series). (String)
-- `IMDb Rating`: Rating for this movie on IMDb. (Float)
-- `Runtime (mins)`: Length of this in minutes. (Integer)
-- `Year`: Year released in movie databases. (Integer)
-- `Genres`: Genre belongs to this movie. (String)
-- `Num Votes`: Number of votes received on IMDb. (Number)
-- `Release Date`: When the movie was released. (Date)
-- `Directors`: Who directed this movie. (String)
-...
->>>>>>> ad0f8405b4476c4ba353fbea887a41a93045c7ef
+Data sets were taken from Kaggle and were collected by web scraping the IMDb website and putting together information from the IMDb database.
+```{r}
+#| label: load-libraries
+#| message: false
+#| warning: false
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(janitor)
+library(lubridate)
+```
+
+```{r}
+#| label: import-data
+#| message: false
+#| warning: false
+movies_cleaned <- read_csv("data/Movies - Cleaned.csv") |> clean_names()
+movies_sequels <- read_csv("data/Movies with sequels.csv") |> clean_names()
+imdb_movies    <- read_csv("data/IMDb movies.csv")        |> clean_names()
+imdb_ratings   <- read_csv("data/IMDb ratings.csv")       |> clean_names()
+```
+
+## Data Cleaning
+
+After importing the raw datasets, we clean and standardize each one to ensure 
+consistency before joining. This includes fixing data types, removing duplicates, 
+and dropping rows with missing values in key fields. Note that `clean_names()` 
+was already applied on import, so it is not repeated here.
+```{r}
+#| label: clean-all-datasets
+#| message: false
+#| warning: false
+
+# Clean movies_cleaned
+movies_cleaned <- movies_cleaned |>
+  distinct() |>
+  mutate(
+    title = str_squish(str_to_title(title)),
+    year  = as.integer(year)
+  ) |>
+  filter(!is.na(title), !is.na(year))
+
+# Clean movies_sequels
+movies_sequels <- movies_sequels |>
+  distinct() |>
+  mutate(
+    title = str_squish(str_to_title(title)),
+    year  = as.integer(year)
+  ) |>
+  filter(!is.na(title), !is.na(year))
+
+# Clean imdb_movies
+imdb_movies <- imdb_movies |>
+  distinct() |>
+  mutate(
+    title                 = str_squish(str_to_title(title)),
+    year                  = as.integer(year),
+    budget                = as.numeric(str_replace_all(budget, "[^0-9.]", "")),
+    usa_gross_income      = as.numeric(str_replace_all(usa_gross_income, "[^0-9.]", "")),
+    worlwide_gross_income = as.numeric(str_replace_all(worlwide_gross_income, "[^0-9.]", ""))
+  ) |>
+  filter(!is.na(title), !is.na(year))
+
+# Clean imdb_ratings
+imdb_ratings <- imdb_ratings |>
+  distinct() |>
+  filter(!is.na(imdb_title_id), !is.na(weighted_average_vote))
+```
+
+## Data Joining
+
+Here we join the two movie datasets (Data Source 1 from the project proposal) 
+using a left join on both `title` and `year` to ensure we're matching the 
+correct films. The suffix argument distinguishes columns that appear in both 
+datasets. The result, `joined_sequel_data`, retains all rows from 
+`movies_cleaned` and appends sequel information where available.
+```{r}
+#| label: join-sequel-data
+#| message: false
+
+joined_sequel_data <- movies_cleaned |>
+  left_join(
+    movies_sequels,
+    by     = c("title", "year"),
+    suffix = c("_cleaned", "_sequels")
+  )
+
+```
+
+The two IMDb datasets are joined using `imdb_title_id` as the key, which is a 
+unique identifier shared across both files. This produces a single IMDb dataset 
+`imdb_full` that contains both movie metadata and ratings information.
+```{r}
+#| label: join-imdb-data
+#| message: false
+imdb_full <- imdb_movies |>
+  left_join(imdb_ratings, by = "imdb_title_id")
+```
+
+Finally, we combine both data sources into one unified dataset. Because some 
+titles exist in IMDb under a different release year, we join on title only and 
+then keep the closest year match within a 2-year window. This significantly 
+improves the number of successful matches over a strict title + year join.
+```{r}
+#| label: final-join
+#| message: false
+#| warning: false
+final_joined_data <- joined_sequel_data |>
+  left_join(
+    imdb_full,
+    by           = "title",
+    suffix       = c("_sequels", "_imdb"),
+    relationship = "many-to-many"
+  ) |>
+  mutate(year_diff = abs(year_sequels - year_imdb)) |>
+  group_by(title, year_sequels) |>
+  slice_min(year_diff, n = 1) |>
+  ungroup() |>
+  filter(year_diff <= 2)
+
+```
+## Data Definitions
+
+* **`title`**: Official name of the movie, used as the primary key for joining datasets.
+* **`year`**: Release year, used to guarantee correct matching between sequels and originals.
+* **`budget`**: Production cost of the movie.
+* **`worlwide_gross_income`**: Total revenue generated globally.
+* **`income_budget_ratio`**: A self-derived metric calculated as $\frac{\text{worldwide\_gross\_income}}{\text{budget}}$. This standardizes financial success relative to the initial budget.
+* **`im_db_rating_cleaned`**: Weighted average of user vote from IMDb on a scale of 1–10.
+* **`sequel_status`**: Labels films as either "Original" or "Sequel or Later".
+* **`installment`**: Groups films by their position in a franchise: 1st (Original), 2nd, or 3rd+.
+
+## Join Summary
+
+All 272 movies successfully matched with IMDb data, confirming that the 
+title-based join with a 2-year tolerance worked correctly. This gives us a 
+complete dataset to work with for the rest of the analysis.
+```{r}
+#| label: join-summary
+#| message: false
+
+invisible(
+  final_joined_data |>
+    summarise(
+      matched   = sum(!is.na(imdb_title_id)),
+      unmatched = sum(is.na(imdb_title_id))
+  )
+)
+```
+
+## Creating New Columns
+
+Since sequels often have much larger production budgets, simply comparing total income might not be a fair comparison. A movie with a huge budget might naturally bring in more income because of marketing, special effects, or brand recognition. Therefore, dividing income/budget to create a income-to-budget ratio will allow comparisons on how successful films are relative to how much money was invested in them.
+
+```{r}
+#| label: creating-revenue-budget-ratio
+
+final_joined_data <- final_joined_data |> 
+  mutate(income_budget_ratio = worlwide_gross_income / budget)
+
+
+```
+
+
+## Analysis
+
+To analyze whether sequels or original films performed better, we investigated two main variables: financial success and IMDb ratings.
+
+Financial success was the first variable measured. Again, it was computed by taking the ratio of income to budget, so financial success would be measured relative to the amount of money put into the film.
+
+```{r}
+#| label: financial-success-plot
+#| warning: FALSE
+
+final_joined_data <- final_joined_data |>
+  filter(!is.na(order)) |>  # keep only movies that are part of a series
+  mutate(
+    sequel_status = if_else(order == 1, "Original", "Sequel_or_later")
+  )
+
+final_joined_data |>
+  ggplot(aes(x = income_budget_ratio, y = sequel_status , fill = sequel_status)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_x_log10() +
+  labs(
+    x = "Worldwide income / budget (log scale)",
+    y = "Movie type",
+    title = "Relative Financial Success (income/budget):
+    Originals vs Sequels"
+  ) +
+  theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+#| label: budget-median
+
+final_joined_data |> 
+  group_by(sequel_status) |> 
+  summarize(
+    Median = median(income_budget_ratio, na.rm = TRUE)
+  ) |> 
+  mutate(
+    sequel_status = stringr::str_replace_all(sequel_status, "_", " "),
+    sequel_status = stringr::str_to_title(sequel_status)
+  ) |> 
+   rename(
+    "Sequel Status" = sequel_status,
+    "Median" = Median
+  ) |> 
+  knitr::kable(digits = 2)
+```
+
+The median income-to-budget ratio for original movies was about 4, while that of sequels or later films was about 3.7. Thus, a slight increase in the median financial success can be seen in original films compared to moves that succeed them. This same result is also seen in the graph, where the median of the income/budget ratio for original films is slightly higher than that of later films. However, it is important to note that the boxplots for both original and sequel-or-later films have outliers on both the higher and lower ends, showing there are movies in both categories that underperform and overperform. The distribution of original films' outliers shows more variability (in other words, the outliers span a greater distance), while the distribution of sequel-or-later films' outliers span a smaller distance, suggesting more predictable outcomes in seqeul-or-later films.
+
+Overall, the graph and summary statistics suggest original films have slightly greater financial success than sequel-or-later films.
+
+
+IMDb rating was the next variable analyzed.
+
+```{r}
+#| label: rating-plot
+
+final_joined_data |>
+  ggplot(aes(x = im_db_rating_cleaned, y = sequel_status , fill = sequel_status)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_x_log10() +
+  labs(
+    x = "IMDb Rating",
+    y = "Movie type",
+    title = "Relative Rating Success: Originals vs Sequels"
+  ) +
+  theme_minimal() +
+  scale_y_discrete(
+    labels = c("Original", "Sequel or Later")
+  ) +
+  theme(legend.position = "none")
+```
+
+```{r}
+#| label: rating-median
+
+final_joined_data |> 
+  group_by(sequel_status) |> 
+  summarize(
+    Median = median(im_db_rating_cleaned)
+  ) |> 
+  mutate(
+    sequel_status = stringr::str_replace_all(sequel_status, "_", " "),
+    sequel_status = stringr::str_to_title(sequel_status)
+  ) |> 
+  rename(
+    "Sequel Status" = sequel_status,
+    "Median" = Median
+  ) |> 
+  knitr::kable(digits = 3)
+```
+
+The median IMDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests less consistent audience reception; additionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
+
+Overall, the graph and summary statistics suggest original films have slightly greater IMDb ratings than sequel-or-later films.
+
+### Returns by Installment
+
+Grouping all post-original films together may hide a pattern: do returns
+decline with each successive installment?
+
+```{r}
+#| label: installment-returns
+
+final_joined_data |>
+  mutate(installment = case_when(
+    order == 1 ~ "1st (Original)",
+    order == 2 ~ "2nd",
+    order >= 3 ~ "3rd+"
+  )) |>
+  group_by(installment) |>
+  summarize(
+    median_ratio = median(income_budget_ratio, na.rm = TRUE),
+    median_rating = median(im_db_rating_cleaned, na.rm = TRUE),
+    n = n()
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+The results reveal a divergence between audience reception and financial
+performance. Median IMDb ratings decline steadily with each installment
+(6.9 → 6.4 → 6.1), consistent with franchise fatigue. Financial returns,
+however, do not follow: while second installments show a meaningful drop
+in income-to-budget ratio (4.01 → 3.30), third-and-later installments
+recover to near-original levels (3.96) — despite being the worst-rated
+group. By the third film, a franchise's earning power appears to have
+decoupled from its critical reception: audiences continue paying for
+films they rate progressively lower.
+
+One caveat: the third-and-later group is subject to survivorship bias.
+Franchises only reach a third installment if earlier films performed
+well enough to justify one, so this group over-represents commercially
+successful series. Even so, the divergence between the ratings and
+returns trajectories suggests that established franchises retain
+box-office pull independent of per-film quality.
+
+### Outlier Sequels: The Overperformers
+
+To put faces on these patterns, we examine the individual sequels with the
+highest income-to-budget ratios.
+
+```{r}
+#| label: overperformer-sequels
+
+final_joined_data |>
+  filter(order >= 2) |>
+  arrange(desc(income_budget_ratio)) |>
+  select(title, year_sequels, order,
+         income_budget_ratio, im_db_rating_cleaned) |>
+  head(10) |>
+  rename(
+    "Title" = title,
+    "Year" = year_sequels,
+    "Installment" = order,
+    "Income/Budget" = income_budget_ratio,
+    "IMDb Rating" = im_db_rating_cleaned
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+The overperformer list is dominated by low-budget horror. *Paranormal
+Activity 2* turned a \$3 million budget into \$177 million — a 59x
+return — while its audience rated it just 5.6. Its successor returned
+41x, and the fourth installment, rated a scornful 4.6, still returned
+28x. Horror sequels cost little to produce and their audiences show up
+regardless of how they rated the previous film, which is a large part of
+what drives the third-installment recovery seen above. *The Twilight
+Saga: New Moon* offers perhaps the starkest single example of the
+ratings-revenue divorce: rated 4.7 on IMDb, it grossed \$711 million.
+And the 2018 *Halloween* — the eleventh film in a forty-year-old
+franchise — returned roughly 25x its \$10 million budget, illustrating
+how durable franchise earning power can be across decades of declining
+ratings.
+
+Note on data quality: two entries in this table (*Hellraiser*, 1987, and
+*Gremlins*, 1984) appear to reflect join mismatches, where a sequel's row
+matched the original film's financial data within the 2-year tolerance
+window. These entries are retained in the table for transparency but are
+excluded from interpretation.
+
+### Outlier Sequels: The Flops
+
+The least profitable sequels tell an equally instructive story.
+
+```{r}
+#| label: flop-sequels
+
+final_joined_data |>
+  filter(order >= 2) |>
+  arrange(income_budget_ratio) |>
+  select(title, year_sequels, order,
+         income_budget_ratio, im_db_rating_cleaned) |>
+  head(10) |>
+  rename(
+    "Title" = title,
+    "Year" = year_sequels,
+    "Installment" = order,
+    "Income/Budget" = income_budget_ratio,
+    "IMDb Rating" = im_db_rating_cleaned
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+Sequels do fail — but the pattern of failure is revealing. *Basic
+Instinct 2* spent \$70 million arriving fourteen years after the
+original; *Zoolander 2* waited fifteen; *RoboCop 3* recast its lead.
+The common thread across the flops is not simply poor quality — several
+profitable sequels in the dataset were rated worse — but broken
+continuity: long gaps between installments, missing stars, or franchises
+whose momentum had lapsed. This suggests the decoupling of earnings from
+reception is conditional: franchise loyalty survives declining quality,
+but not lapsed momentum. (Note also that the very lowest ratios, such as
+*Universal Soldier: Regeneration*, partly reflect releases that went
+largely direct-to-video, where theatrical gross understates total
+revenue.)
+
+### Predicting Sequel Performance
+
+The descriptive results raise a practical question: if a studio has an
+original film in hand, can its characteristics predict how a sequel would
+perform? To explore this, we restructure the data so that each observation
+is a franchise pair — the original film's characteristics alongside its
+second installment's outcome — and fit a linear regression predicting the
+sequel's income-to-budget ratio.
+
+```{r}
+#| label: build-pairs
+#| message: false
+#| warning: false
+
+pairs <- final_joined_data |>
+  filter(order <= 2) |>
+  group_by(movie_series, order) |>
+  slice_min(year_diff, n = 1, with_ties = FALSE) |>  # resolve duplicate title matches
+  ungroup() |>
+  select(movie_series, order, year_sequels,
+         income_budget_ratio, im_db_rating_cleaned,
+         budget) |>
+  pivot_wider(
+    id_cols     = movie_series,
+    names_from  = order,
+    values_from = c(income_budget_ratio, im_db_rating_cleaned,
+                    budget, year_sequels)
+  ) |>
+  rename(
+    original_ratio   = income_budget_ratio_1,
+    sequel_ratio     = income_budget_ratio_2,
+    original_rating  = im_db_rating_cleaned_1,
+    original_budget  = budget_1,
+    year_original    = year_sequels_1,
+    year_sequel      = year_sequels_2
+  ) |>
+  mutate(gap_years = year_sequel - year_original) |>
+  filter(!is.na(sequel_ratio), !is.na(original_ratio),
+         is.finite(sequel_ratio), is.finite(original_ratio),
+         original_budget > 0)
+```
+
+Complete data for both halves of a pair survives the joins for
+`r nrow(pairs)` franchises. We model the log of the sequel's
+income-to-budget ratio as a function of four characteristics of the
+original: its own income-to-budget ratio (logged), its IMDb rating, its
+production budget (logged), and the number of years between the original
+and the sequel. Monetary variables are logged because return ratios are
+heavily right-skewed — a small number of extreme performers would
+otherwise dominate the fit.
+
+```{r}
+#| label: sequel-model
+
+model <- lm(log(sequel_ratio) ~ log(original_ratio) + original_rating +
+              log(original_budget) + gap_years,
+            data = pairs)
+
+broom::tidy(model) |>
+  mutate(term = case_when(
+    term == "(Intercept)"          ~ "Intercept",
+    term == "log(original_ratio)"  ~ "Original's income/budget (log)",
+    term == "original_rating"      ~ "Original's IMDb rating",
+    term == "log(original_budget)" ~ "Original's budget (log)",
+    term == "gap_years"            ~ "Years between films"
+  )) |>
+  rename(
+    "Predictor" = term,
+    "Estimate" = estimate,
+    "Std. Error" = std.error,
+    "t" = statistic,
+    "p-value" = p.value
+  ) |>
+  knitr::kable(digits = 3)
+```
+
+```{r}
+#| label: sequel-model-fit
+
+broom::glance(model) |>
+  select(r.squared, adj.r.squared, nobs) |>
+  rename(
+    "R-squared" = r.squared,
+    "Adjusted R-squared" = adj.r.squared,
+    "N (franchise pairs)" = nobs
+  ) |>
+  knitr::kable(digits = 3)
+```
+
+The model explains roughly 60% of the variation in sequel returns
+(adjusted R² = 0.60), and its results reinforce the decoupling theme from
+the installment analysis:
+
+**The original's profitability is the dominant predictor.** The
+coefficient on the original's (logged) income-to-budget ratio is 0.53
+(p < 0.001). Because both variables are logged, this is interpretable as
+an elasticity: a 1% more profitable original predicts a roughly 0.53%
+more profitable sequel. Notably, the elasticity is well below 1 —
+sequels inherit their parent's economics, but with substantial regression
+to the mean. Exceptional originals tend to produce good, but less
+exceptional, sequels.
+
+**The original's audience rating predicts nothing.** Controlling for the
+original's profitability, its IMDb rating has essentially no relationship
+with sequel returns (coefficient ≈ 0.02, p = 0.89). This is the
+regression-based counterpart of the installment finding: how much
+audiences *liked* the original carries no measurable information about
+how much its sequel will *earn*, once the original's financial
+performance is known. A studio deciding whether to greenlight a sequel
+would, on this evidence, learn more from the original's balance sheet
+than from its reviews.
+
+**Larger-budget originals predict better sequel returns.** The
+coefficient on the original's (logged) budget is positive (0.16,
+p = 0.049) — controlling for profitability, sequels of bigger-budget
+originals return more per dollar. One interpretation is that budget
+proxies for studio commitment: marketing infrastructure, distribution
+reach, and franchise-building intent that carry over into the sequel.
+This effect strengthens considerably in robustness checks that exclude
+outliers (p < 0.001), suggesting it is not an artifact of extreme cases.
+
+**Longer gaps point in the expected direction, but are not significant.**
+Each additional year between the original and its sequel is associated
+with roughly 2% lower sequel returns (coefficient −0.019), consistent
+with the broken-momentum pattern visible in the flop analysis (*Basic
+Instinct 2*, *Zoolander 2*). With 44 pairs, however, the estimate does
+not reach statistical significance (p = 0.21), and in robustness checks
+excluding the largest outliers — including *Basic Instinct*, the
+sample's most dramatic long-gap failure — the gap coefficient attenuates
+toward zero. This indicates that the momentum pattern in this sample
+rests on a small number of extreme cases rather than a uniform gradient.
+We treat the momentum hypothesis as anecdotally vivid but statistically
+unresolved at this sample size.
+
+#### Robustness Checks
+
+The residuals-versus-fitted plot below shows no systematic pattern,
+supporting the model specification. Two large residuals are identifiable:
+*Basic Instinct* (a strong original whose sequel, arriving fourteen years
+later, collapsed) and *The Twilight Saga* (a modest original whose
+rapid-turnaround sequel returned 11x). The dataset also contains one
+high-leverage observation: *Paranormal Activity*, whose original — made
+for approximately \$15,000 — has by far the most extreme income-to-budget
+ratio in the data.
+
+```{r}
+#| label: residual-plot
+
+plot(model, which = 1)
+```
+
+Refitting the model with these three franchises excluded tests whether
+the findings depend on extreme cases:
+
+```{r}
+#| label: robustness-check
+
+pairs_robust <- pairs |>
+  filter(!movie_series %in% c("Basic Instinct", "The Twilight Saga",
+                              "Paranormal Activity"))
+
+model_check <- lm(log(sequel_ratio) ~ log(original_ratio) + original_rating +
+                    log(original_budget) + gap_years,
+                  data = pairs_robust)
+
+broom::tidy(model_check) |>
+  mutate(term = case_when(
+    term == "(Intercept)"          ~ "Intercept",
+    term == "log(original_ratio)"  ~ "Original's income/budget (log)",
+    term == "original_rating"      ~ "Original's IMDb rating",
+    term == "log(original_budget)" ~ "Original's budget (log)",
+    term == "gap_years"            ~ "Years between films"
+  )) |>
+  rename(
+    "Predictor" = term,
+    "Estimate" = estimate,
+    "Std. Error" = std.error,
+    "t" = statistic,
+    "p-value" = p.value
+  ) |>
+  knitr::kable(digits = 3)
+```
+
+The two principal findings are substantively unchanged: the coefficient
+on the original's profitability strengthens slightly (0.53 → 0.59,
+p < 0.001), and the original's rating remains a null predictor (p = 0.42).
+The budget effect strengthens markedly (0.16 → 0.22, p < 0.001),
+indicating the full-sample estimate was dampened, not driven, by the
+outliers. The gap-years coefficient attenuates toward zero once *Basic
+Instinct* is removed, as discussed above.
+
+Several caveats apply to the model as a whole. This is an exploratory
+analysis of 44 franchise pairs — those that both received a sequel and
+survived the data joins with complete financial information — so the
+estimates describe sequels that were made, not the full universe of
+sequels a studio might consider. Selection is therefore built into the
+sample: studios presumably declined the least promising sequels, which
+restricts the range of the data. The relatively high R² also warrants
+caution, as both outcome and predictors were derived from the same data
+pipeline.
+
+## Discussion
+
+  This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories — financial success and rating success. At the aggregate level, original films have greater success in both categories; at the installment level, however, the relationship between the two kinds of success comes apart in an interesting way.
+  
+  Financial success was calculated as an income-to-budget ratio, and the median for original films, around 4, was slightly higher than that of sequel-or-later films, about 3.7. In other words, original films, on average, earn more money relative to money invested. This suggests that even though sequel-or-later films often have a "fan base," or a group of people invested in the first film and wanting to watch more, this doesn't often lead to greater financial success. Thus, even though original films are "riskier" in the sense that filmmakers have no basis to conclude how their film might be perceived by audiences, they still tend to result in more income.
+  
+  IMDb ratings were used to measure rating success, and again, the median IMDb rating for original films (6.9 out of 10) was higher than that of sequel-or-later films (6.2 out of 10). Factors that can explain decreased ratings for sequel-or-later films include a decline in the novelty of the film's plot, higher expectations that the first film established leading to a sense of being let down, and the phenomenon of "franchise fatigue," where viewers no longer look forward to a continuation of a story due to issues such as decreasing quality or lack of originality.
+  
+  The installment-level analysis complicates the simple "originals win" story. Ratings decline monotonically across installments (6.9 → 6.4 → 6.1) — franchise fatigue is clearly visible in how audiences evaluate the films. But financial returns do not track this decline: after a dip at the second installment (3.30), third-and-later films recover to near-original levels of profitability (3.96) while being the worst-rated group in the dataset. Franchise earning power, in other words, appears to decouple from audience reception as a series matures. This provides a statistical basis for a familiar puzzle: audiences profess exhaustion with long-running franchises, yet studios continue to greenlight them — because the exhaustion registers in ratings, not in revenue.
+  
+  The outlier analysis suggests both the mechanism and the boundary of this decoupling. Low-budget horror franchises (*Paranormal Activity*, *Saw*) drive much of the late-installment recovery: their sequels cost little and their audiences attend reliably regardless of reception. Meanwhile, the flop list shows that sequels fail not primarily when they are bad, but when franchise momentum breaks — long gaps (*Basic Instinct 2*, *Zoolander 2*) or the loss of key elements (*RoboCop 3*). Franchise loyalty behaves less like enthusiasm and more like habit: it tolerates declining quality but not interruption.
+  
+  The exploratory regression reinforces these findings in predictive form. Across 44 franchise pairs, the original film's profitability strongly predicts its sequel's returns (elasticity ≈ 0.53, robust to outlier exclusion), while the original's audience rating predicts nothing once profitability is known — the forward-looking counterpart of the installment-level decoupling. The original's budget also positively predicts sequel returns, consistent with budget proxying for studio commitment to franchise-building. The delay between films points in the harmful direction suggested by the flop analysis, but the estimate is not statistically significant and rests substantially on a few extreme cases; the momentum hypothesis remains unresolved at this sample size.
+  
+  The analysis includes several limitations. First, the third-and-later installment group carries survivorship bias: franchises only reach a third film if earlier installments performed well enough to justify one, so this group over-represents commercially successful series. Some of the late-installment recovery therefore reflects selection rather than a property of sequels as such. The same selection applies to the regression sample, which contains only sequels that were greenlit.
+  
+  Second, factors like genre may influence whether sequels seem to have more success than their original films, and the outlier analysis strongly suggests genre matters — horror appears to dominate the high-return sequels — but genre was not systematically controlled for. A possible improvement is to repeat the analysis stratified by genre.
+  
+  Third, the title-based fuzzy join, while achieving a full match rate, introduced at least two identifiable mismatches (*Hellraiser*, *Gremlins*) where sequel rows matched original films' financial data. A stricter join keyed on unique identifiers across all datasets would improve reliability.
+  
+  Finally, IMDb ratings may be susceptible to problems like response bias and may not be representative of the actual quality of the movie if users are voting based on other factors, such as rating movies higher if it includes their favorite actors. A possible improvement is to incorporate additional reception measures, such as critics' scores.
+  
+## References
+
+[Franchise Fatigue](https://www.licenseglobal.com/movies/trending-what-is-franchise-fatigue-and-is-it-real)
+
+"Trending: What Is Franchise Fatigue, and Is It Real?" License Global, www.licenseglobal.com/movies/trending-what-is-franchise-fatigue-and-is-it-real.
+
+[IMDb Rating Limitations](https://www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl)
+
+"The Problem with IMDb's Rating System." The Ringer, www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl.
+
+[IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
+
+Mudigoudr, Sharath. "Imdb Movie Dataset from Year 1893 to 2020." Kaggle, 30 Mar. 2024, www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data. 
+
+[Sequel data set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
+
+Cpbdev. "Sequels_dataset." Kaggle, 16 Feb. 2023, www.kaggle.com/code/cpbdev/sequels-dataset/input.

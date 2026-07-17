@@ -12,7 +12,7 @@ execute:
 ---
 
 # Project Abstract
-Our project investigates the relative success of movie sequels compared to the original films by analyzing financial performance and IMDb ratings across 272 movies. We standardized financial success by creating an income-to-budget ratio metric, where we found that original films (median ratio ~ 4.0) slightly outperform sequels (median ratio ~3.7) and maintain higher audience ratings (6.9 vs. 6.2). Our findings suggest that despite the expectation of the pre-existing audience of franchises, original productions tend to achieve slightly greater  profitability.
+Our project investigates the relative success of movie sequels compared to the original films by analyzing financial performance and IMDb ratings across 272 movies. We standardized financial success by creating an income-to-budget ratio metric, where we found that original films (median ratio ~4.0) slightly outperform sequels (median ratio ~3.7) and maintain higher audience ratings (6.9 vs. 6.2). An installment-level analysis further reveals that while audience ratings decline monotonically across a franchise (6.9 → 6.4 → 6.1), financial returns recover by the third installment, suggesting franchise earning power decouples from audience reception over time. Our findings suggest that despite the expectation of the pre-existing audience of franchises, original productions tend to achieve slightly greater profitability — but that established franchises retain box-office pull largely independent of per-film quality.
 
 ## Introduction
 
@@ -27,7 +27,7 @@ All data was sourced from IMDb and compiled for the STA 199 course project. Wher
 
 [IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
 
-[Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
+[Sequel data set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
 ## Data 
 
@@ -36,9 +36,12 @@ Data sets were taken from Kaggle and were collected by web scraping the IMDb web
 #| label: load-libraries
 #| message: false
 #| warning: false
-library(tidyverse)
-library(janitor)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(ggplot2)
 library(stringr)
+library(janitor)
 library(lubridate)
 ```
 
@@ -160,6 +163,7 @@ final_joined_data <- joined_sequel_data |>
 * **`income_budget_ratio`**: A self-derived metric calculated as $\frac{\text{worldwide\_gross\_income}}{\text{budget}}$. This standardizes financial success relative to the initial budget.
 * **`im_db_rating_cleaned`**: Weighted average of user vote from IMDb on a scale of 1–10.
 * **`sequel_status`**: Labels films as either "Original" or "Sequel or Later".
+* **`installment`**: Groups films by their position in a franchise: 1st (Original), 2nd, or 3rd+.
 
 ## Join Summary
 
@@ -291,24 +295,149 @@ final_joined_data |>
   knitr::kable(digits = 3)
 ```
 
-The median IMBDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests  less consistent audience reception; additionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
+The median IMDb rating of original films (6.9 out of 10) was higher for original films than sequel-or-later films (6.2 out of 10). This same result is also seen in the graph, where the median of the IMDb ratings for original films is slightly higher than that of later films. It's also important to note that the distribution of ratings for sequel-or-later films seems to have greater variability, which suggests less consistent audience reception; additionally, while both distributions have outliers, the sequel-or-later films have 4 more outliers than the original films distribution, and they are also lower, suggesting that sequel-or-later films tend to have a harder time maintaining high audience enjoyment compared to original films. Nevertheless, both boxplots do overlap indicating that some sequels can still be successful.
 
-Overall, the graph and summary statistics suggest original films have slightly greater IMDd ratings than sequel-or-later films.
+Overall, the graph and summary statistics suggest original films have slightly greater IMDb ratings than sequel-or-later films.
 
+### Returns by Installment
+
+Grouping all post-original films together may hide a pattern: do returns
+decline with each successive installment?
+
+```{r}
+#| label: installment-returns
+
+final_joined_data |>
+  mutate(installment = case_when(
+    order == 1 ~ "1st (Original)",
+    order == 2 ~ "2nd",
+    order >= 3 ~ "3rd+"
+  )) |>
+  group_by(installment) |>
+  summarize(
+    median_ratio = median(income_budget_ratio, na.rm = TRUE),
+    median_rating = median(im_db_rating_cleaned, na.rm = TRUE),
+    n = n()
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+The results reveal a divergence between audience reception and financial
+performance. Median IMDb ratings decline steadily with each installment
+(6.9 → 6.4 → 6.1), consistent with franchise fatigue. Financial returns,
+however, do not follow: while second installments show a meaningful drop
+in income-to-budget ratio (4.01 → 3.30), third-and-later installments
+recover to near-original levels (3.96) — despite being the worst-rated
+group. By the third film, a franchise's earning power appears to have
+decoupled from its critical reception: audiences continue paying for
+films they rate progressively lower.
+
+One caveat: the third-and-later group is subject to survivorship bias.
+Franchises only reach a third installment if earlier films performed
+well enough to justify one, so this group over-represents commercially
+successful series. Even so, the divergence between the ratings and
+returns trajectories suggests that established franchises retain
+box-office pull independent of per-film quality.
+
+### Outlier Sequels: The Overperformers
+
+To put faces on these patterns, we examine the individual sequels with the
+highest income-to-budget ratios.
+
+```{r}
+#| label: overperformer-sequels
+
+final_joined_data |>
+  filter(order >= 2) |>
+  arrange(desc(income_budget_ratio)) |>
+  select(title, year_sequels, order,
+         income_budget_ratio, im_db_rating_cleaned) |>
+  head(10) |>
+  rename(
+    "Title" = title,
+    "Year" = year_sequels,
+    "Installment" = order,
+    "Income/Budget" = income_budget_ratio,
+    "IMDb Rating" = im_db_rating_cleaned
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+The overperformer list is dominated by low-budget horror. *Paranormal
+Activity 2* turned a \$3 million budget into \$177 million — a 59x
+return — while its audience rated it just 5.6. Its successor returned
+41x, and the fourth installment, rated a scornful 4.6, still returned
+28x. Horror sequels cost little to produce and their audiences show up
+regardless of how they rated the previous film, which is a large part of
+what drives the third-installment recovery seen above. *The Twilight
+Saga: New Moon* offers perhaps the starkest single example of the
+ratings-revenue divorce: rated 4.7 on IMDb, it grossed \$711 million.
+And the 2018 *Halloween* — the eleventh film in a forty-year-old
+franchise — returned roughly 25x its \$10 million budget, illustrating
+how durable franchise earning power can be across decades of declining
+ratings.
+
+Note on data quality: two entries in this table (*Hellraiser*, 1987, and
+*Gremlins*, 1984) appear to reflect join mismatches, where a sequel's row
+matched the original film's financial data within the 2-year tolerance
+window. These entries are retained in the table for transparency but are
+excluded from interpretation.
+
+### Outlier Sequels: The Flops
+
+The least profitable sequels tell an equally instructive story.
+
+```{r}
+#| label: flop-sequels
+
+final_joined_data |>
+  filter(order >= 2) |>
+  arrange(income_budget_ratio) |>
+  select(title, year_sequels, order,
+         income_budget_ratio, im_db_rating_cleaned) |>
+  head(10) |>
+  rename(
+    "Title" = title,
+    "Year" = year_sequels,
+    "Installment" = order,
+    "Income/Budget" = income_budget_ratio,
+    "IMDb Rating" = im_db_rating_cleaned
+  ) |>
+  knitr::kable(digits = 2)
+```
+
+Sequels do fail — but the pattern of failure is revealing. *Basic
+Instinct 2* spent \$70 million arriving fourteen years after the
+original; *Zoolander 2* waited fifteen; *RoboCop 3* recast its lead.
+The common thread across the flops is not simply poor quality — several
+profitable sequels in the dataset were rated worse — but broken
+continuity: long gaps between installments, missing stars, or franchises
+whose momentum had lapsed. This suggests the decoupling of earnings from
+reception is conditional: franchise loyalty survives declining quality,
+but not lapsed momentum. (Note also that the very lowest ratios, such as
+*Universal Soldier: Regeneration*, partly reflect releases that went
+largely direct-to-video, where theatrical gross understates total
+revenue.)
 
 ## Discussion
 
-  This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories - financial success and rating success. It was found that original films have greater success in both categories.
+  This study investigated whether movie sequels/succeeding films or original films seem to have greater success. Success was broken down into two categories — financial success and rating success. At the aggregate level, original films have greater success in both categories; at the installment level, however, the relationship between the two kinds of success comes apart in an interesting way.
   
-  Financial success was calculated as an income-to-budget ratio, and the median for original films, around 4, was slightly higher than that of sequel-or-later films, about 3.7. In other words, original films, on average, earn more money relative to money invested. This suggests that even though sequel-or-later films often have a "fan base," or a group of people invested in the first film and wanting to watch more, this doesn't often lead to greater financial success. Thus, even though original films are "riskier" in the sense that filmmakers have no basis to conclude how their film might be perceived by audiences, they still tend to result in more income. This could influence how directors and creators of films choose which projects to take on.
+  Financial success was calculated as an income-to-budget ratio, and the median for original films, around 4, was slightly higher than that of sequel-or-later films, about 3.7. In other words, original films, on average, earn more money relative to money invested. This suggests that even though sequel-or-later films often have a "fan base," or a group of people invested in the first film and wanting to watch more, this doesn't often lead to greater financial success. Thus, even though original films are "riskier" in the sense that filmmakers have no basis to conclude how their film might be perceived by audiences, they still tend to result in more income.
   
   IMDb ratings were used to measure rating success, and again, the median IMDb rating for original films (6.9 out of 10) was higher than that of sequel-or-later films (6.2 out of 10). Factors that can explain decreased ratings for sequel-or-later films include a decline in the novelty of the film's plot, higher expectations that the first film established leading to a sense of being let down, and the phenomenon of "franchise fatigue," where viewers no longer look forward to a continuation of a story due to issues such as decreasing quality or lack of originality.
   
-  The analysis includes several limitations. One is that all films that came after the original were put into one category. In other words, if a movie franchise has 3 movies in the series, the first one, the original one, is given its own category, while the sequel and third movie are put into the same category. Thus, nuances may be lost (for example, a sequel may have performed really well, but the third installment may have performed very poorly, making the overall "sequels-or-later" category for that franchise have a low financial/rating success). A possible improvement to address this issue is to show these nuances by comparing the financial and rating success for each film in a sequence to its original separately.
+  The installment-level analysis complicates the simple "originals win" story. Ratings decline monotonically across installments (6.9 → 6.4 → 6.1) — franchise fatigue is clearly visible in how audiences evaluate the films. But financial returns do not track this decline: after a dip at the second installment (3.30), third-and-later films recover to near-original levels of profitability (3.96) while being the worst-rated group in the dataset. Franchise earning power, in other words, appears to decouple from audience reception as a series matures. This provides a statistical basis for a familiar puzzle: audiences profess exhaustion with long-running franchises, yet studios continue to greenlight them — because the exhaustion registers in ratings, not in revenue.
   
-  Another limitation is that factors like genre may have influenced whether sequels seem to have more success than their original films, but these factors were not taken into account in the analysis. A possible improvement to address this issue is to repeat the analysis but break up the graphs and summary statistics into categories, like genre.
+  The outlier analysis suggests both the mechanism and the boundary of this decoupling. Low-budget horror franchises (*Paranormal Activity*, *Saw*) drive much of the late-installment recovery: their sequels cost little and their audiences attend reliably regardless of reception. Meanwhile, the flop list shows that sequels fail not primarily when they are bad, but when franchise momentum breaks — long gaps (*Basic Instinct 2*, *Zoolander 2*) or the loss of key elements (*RoboCop 3*). Franchise loyalty behaves less like enthusiasm and more like habit: it tolerates declining quality but not interruption.
   
-  A final limitation is the use of IMDb ratings as an indicator for how the movies were perceived by the audience. IMDb ratings may be susceptible to problems like response bias and may not be representative of the actual quality of the movie if users are voting based on other factors, such as rating movies higher if it includes their favorite actors. A possible improvement to address this issue is that other variables could be taken into account to get a more reliable overall rating score, such as by also considering critics' scores.
+  The analysis includes several limitations. First, the third-and-later installment group carries survivorship bias: franchises only reach a third film if earlier installments performed well enough to justify one, so this group over-represents commercially successful series. Some of the late-installment recovery therefore reflects selection rather than a property of sequels as such.
+  
+  Second, factors like genre may influence whether sequels seem to have more success than their original films, and the outlier analysis strongly suggests genre matters — horror appears to dominate the high-return sequels — but genre was not systematically controlled for. A possible improvement is to repeat the analysis stratified by genre.
+  
+  Third, the title-based fuzzy join, while achieving a full match rate, introduced at least two identifiable mismatches (*Hellraiser*, *Gremlins*) where sequel rows matched original films' financial data. A stricter join keyed on unique identifiers across all datasets would improve reliability.
+  
+  Finally, IMDb ratings may be susceptible to problems like response bias and may not be representative of the actual quality of the movie if users are voting based on other factors, such as rating movies higher if it includes their favorite actors. A possible improvement is to incorporate additional reception measures, such as critics' scores.
   
 ## References
 
@@ -318,14 +447,12 @@ Overall, the graph and summary statistics suggest original films have slightly g
 
 [IMDb Rating Limitations](https://www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl)
 
-“The Problem with Imdb’s Rating System.” The Ringer, www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl.
+"The Problem with IMDb's Rating System." The Ringer, www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl.
 
 [IMDb movie ratings data set](https://www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data)
 
-Mudigoudr, Sharath. “Imdb Movie Dataset from Year 1893 to 2020.” Kaggle, 30 Mar. 2024, www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data. 
+Mudigoudr, Sharath. "Imdb Movie Dataset from Year 1893 to 2020." Kaggle, 30 Mar. 2024, www.kaggle.com/datasets/sharathmudigoudr/imdb-movie-dataset-from-year-1893-to-2020/data. 
 
-[Sequel data set set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
+[Sequel data set](https://www.kaggle.com/code/cpbdev/sequels-dataset/input)
 
-Cpbdev. “Sequels_dataset.” Kaggle, 16 Feb. 2023, www.kaggle.com/code/cpbdev/sequels-dataset/input. 
-
-  
+Cpbdev. "Sequels_dataset." Kaggle, 16 Feb. 2023, www.kaggle.com/code/cpbdev/sequels-dataset/input. 

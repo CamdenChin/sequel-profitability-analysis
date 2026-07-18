@@ -592,19 +592,18 @@ summary(model_check)
 
 
 ```{r}
-standalone_films <- imdb_full |>
+#| label: greenlight-simulator
+
+all_scored_films <- imdb_full |>
   filter(!is.na(budget), !is.na(worlwide_gross_income),
          budget > 0, worlwide_gross_income > 0,
          str_detect(country, "USA")) |>          # avoid currency mismatch trap
-  anti_join(final_joined_data, by = "imdb_title_id") |>
   mutate(income_budget_ratio = worlwide_gross_income / budget) |>
-  filter(is.finite(income_budget_ratio), income_budget_ratio > 0)
-
-nrow(standalone_films)   # how big is our candidate pool?
+  filter(is.finite(income_budget_ratio), income_budget_ratio > 0,
+         budget >= 1e4)                          # drop junk micro-budget rows
 
 # Rename to what the model expects, assume typical 3-year turnaround
-candidates <- standalone_films |>
-  filter(budget >= 1e4) |>
+candidates <- all_scored_films |>
   mutate(
     original_ratio  = income_budget_ratio,
     original_rating = weighted_average_vote,
@@ -617,7 +616,16 @@ candidates |>
   arrange(desc(predicted_sequel_ratio)) |>
   select(original_title, year, budget, income_budget_ratio,
          weighted_average_vote, predicted_sequel_ratio) |>
-  head(30)
+  head(30) |>
+  rename(
+    "Title" = original_title,
+    "Year" = year,
+    "Budget" = budget,
+    "Actual Income/Budget" = income_budget_ratio,
+    "IMDb Rating" = weighted_average_vote,
+    "Predicted Sequel Ratio" = predicted_sequel_ratio
+  ) |>
+  knitr::kable(digits = 2)
 ```
 
 
